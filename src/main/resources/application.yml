@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: usrdev
+    password: P@ssw0rd
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/workshop-management-rest
+    initialization-mode: always
+    continue-on-error: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+        ddl-auto: create
+      generate-ddl: true
+server:
+  port: 4000
+  servlet:
+    context-path: /workshop-management-rest

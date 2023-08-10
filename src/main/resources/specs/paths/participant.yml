@@ -1,0 +1,51 @@
+#___________________________________________________________________________
+#1.Update Participant
+put:
+  tags:
+    - participant-endpoints
+  summary: Update a specific participant by id.
+  operationId: updateParticipant
+  security: [ ]
+  parameters:
+    - $ref: "../parameters/common.yml#/token"
+    - $ref: "../parameters/common.yml#/id"
+    - $ref: "../parameters/common.yml#/participantId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/participant.yml#/UpdatedParticipantRequest"
+  responses:
+    "200":
+      description: Found item structure.
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/participant.yml#/ParticipantResponse"
+    "400":
+      $ref: "../responses/common.yml#/400APIError"
+    "409":
+      $ref: "../responses/common.yml#/409APIError"
+    "500":
+      $ref: "../responses/common.yml#/500APIError"
+
+# #___________________________________________________________________________
+#2.Delete Participant
+delete:
+  tags:
+    - participant-endpoints
+  summary: Delete a specific participant by id.
+  operationId: deleteParticipant
+  parameters:
+    - $ref: "../parameters/common.yml#/token"
+    - $ref: "../parameters/common.yml#/id"
+    - $ref: "../parameters/common.yml#/participantId"
+  responses:
+    "200":
+      $ref: "../responses/common.yml#/200APIMessage"
+    "400":
+      $ref: "../responses/common.yml#/400APIError"
+    "409":
+      $ref: "../responses/common.yml#/409APIError"
+    "500":
+      $ref: "../responses/common.yml#/500APIError"
