@@ -1,0 +1,504 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://localhost:4000/v1'
+    description: Server description
+info:
+  title: workshop-management-rest
+  version: 1.0.0
+  description: Workshop Management service
+  contact:
+    email: infos-dev@mendoz.labs
+  license:
+    name: SBT 1.0
+    url: 'https://www.licence.mendoz.labs'
+tags:
+  - name: workshop-endpoints
+    description: Operations on base workshop entities
+  - name: participant-endpoints
+    description: Operations on base participants entities
+paths:
+  /v1/workshops:
+    post:
+      tags:
+        - workshop-endpoints
+      summary: Register new workshop.
+      operationId: addWorkshop
+      description: Add a brand new workshop
+      parameters:
+        - $ref: '#/components/parameters/token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopRequest'
+      responses:
+        '201':
+          description: Item created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+    get:
+      tags:
+        - workshop-endpoints
+      summary: Fetch pages of workshops filtered by criteria.
+      operationId: searchWorkshops
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/preferredField'
+        - $ref: '#/components/parameters/startDateTime'
+        - $ref: '#/components/parameters/endDateTime'
+      responses:
+        '200':
+          description: Found item structure.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkshopResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+  '/v1/workshops/{id}':
+    put:
+      tags:
+        - workshop-endpoints
+      summary: Update a specific workshop by id.
+      operationId: updateWorkshop
+      security: [ ]
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedWorkshopRequest'
+      responses:
+        '200':
+          description: Found item structure.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+    delete:
+      tags:
+        - workshop-endpoints
+      summary: Delete a specific workshop by id.
+      operationId: deleteWorkshop
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/200APIMessage'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+    patch:
+      tags:
+        - workshop-endpoints
+      summary: add participants to workshop by id.
+      operationId: patchWorkshop
+      security: [ ]
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - firstname
+                  - lastname
+                  - role
+                properties:
+                  firstname:
+                    type: string
+                    example: Wisly
+                  lastname:
+                    type: string
+                    example: CLERVILUS
+                  role:
+                    type: string
+                    default: UNKNOWN
+                    enum:
+                      - DEVELOPER
+                      - FUNCTIONAL_ANALYST
+                      - ARCHITECT
+                      - OTHER
+                      - UNKNOWN
+      responses:
+        '200':
+          description: Found item structure.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+    get:
+      tags:
+        - workshop-endpoints
+      summary: Fetch a specific workshop.
+      operationId: searchCurrentWorkshop
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Found item by id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+  '/v1/workshops/participants/{id}/{participantId}':
+    put:
+      tags:
+        - participant-endpoints
+      summary: Update a specific participant by id.
+      operationId: updateParticipant
+      security: [ ]
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/participantId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Audit'
+                - $ref: '#/components/schemas/ParticipantRequest'
+              type: object
+      responses:
+        '200':
+          description: Found item structure.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Audit'
+                  - $ref: '#/components/schemas/ParticipantRequest'
+                type: object
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+    delete:
+      tags:
+        - participant-endpoints
+      summary: Delete a specific participant by id.
+      operationId: deleteParticipant
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/participantId'
+      responses:
+        '200':
+          $ref: '#/components/responses/200APIMessage'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+  '/v1/workshops/participants/{id}':
+    get:
+      tags:
+        - participant-endpoints
+      summary: Find all participants for a specific workspace.
+      operationId: searchCurrentParticipant
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Found item by id.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ParticipantResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+components:
+  securitySchemes:
+    implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://localhost/oauth/auth'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
+  parameters:
+    startDateTime:
+      in: query
+      name: startDateTime
+      description: Fields to consider to filter by start datetime.
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: 2017-07-21T17:32:28.000Z
+    endDateTime:
+      in: query
+      name: endDateTime
+      description: Fields to consider to filter by ended datetime.
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: 2017-07-21T17:32:28.000Z
+    preferredField:
+      in: query
+      name: preferredField
+      description: Fields to consider to order the elements.
+      required: false
+      schema:
+        type: string
+        example: id
+        default: id
+    status:
+      in: query
+      name: status
+      description: Fields to consider status.
+      required: false
+      schema:
+        type: string
+        default: PENDING
+        enum:
+          - ENDED
+          - STARTED
+          - CANCELED
+          - PENDING
+    id:
+      in: path
+      name: id
+      description: Current entity ID.
+      required: true
+      schema:
+        type: string
+        example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    token:
+      in: header
+      name: token
+      description: security token
+      required: true
+      schema:
+        type: string
+        example: 283jebuiVIVEG&#G#UGFXVVWWVD#h3dndon3j0d1hd119hd&ywyw^YS
+    participantId:
+      in: path
+      name: participantId
+      description: Current participant ID.
+      required: true
+      schema:
+        type: string
+        example: d815d301-8bae-4dd0-a292-56e0cb7509d8
+  schemas:
+    WorkshopRequest:
+      type: object
+      required:
+        - name
+        - description
+        - startDateTime
+        - endDateTime
+        - status
+      properties:
+        name:
+          type: string
+          example: Unit Testing
+        description:
+          type: string
+          example: Workshop sur la mise en place des test unitaires...
+        status:
+          type: string
+          default: PENDING
+          enum:
+            - ENDED
+            - STARTED
+            - CANCELED
+            - PENDING
+        startDateTime:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28.000Z
+        endDateTime:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28.000Z
+    UpdatedWorkshopRequest:
+      allOf:
+        - $ref: '#/components/schemas/Audit'
+        - $ref: '#/components/schemas/WorkshopRequest'
+      type: object
+    WorkshopResponse:
+      allOf:
+        - $ref: '#/components/schemas/Audit'
+        - $ref: '#/components/schemas/WorkshopRequest'
+      type: object
+      required:
+        - participants
+      properties:
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParticipantResponse'
+    ParticipantRequest:
+      type: object
+      required:
+        - firstname
+        - lastname
+        - role
+      properties:
+        firstname:
+          type: string
+          example: Wisly
+        lastname:
+          type: string
+          example: CLERVILUS
+        role:
+          type: string
+          default: UNKNOWN
+          enum:
+            - DEVELOPER
+            - FUNCTIONAL_ANALYST
+            - ARCHITECT
+            - OTHER
+            - UNKNOWN
+    UpdatedParticipantRequest:
+      allOf:
+        - $ref: '#/components/schemas/Audit'
+        - $ref: '#/components/schemas/ParticipantRequest'
+      type: object
+    ParticipantResponse:
+      allOf:
+        - $ref: '#/components/schemas/Audit'
+        - $ref: '#/components/schemas/ParticipantRequest'
+      type: object
+    Audit:
+      type: object
+      required:
+        - uuid
+        - version
+        - createdAt
+        - createdByUser
+      properties:
+        uuid:
+          type: string
+          uniqueItems: true
+          example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+        version:
+          type: integer
+          example: 0
+        createdAt:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28.000Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28.000Z
+        createdByUser:
+          type: string
+          uniqueItems: true
+          example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+        modifiedByUser:
+          type: string
+          uniqueItems: true
+          example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+  responses:
+    500APIError:
+      description: This is an unexpected error occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: 500
+              message:
+                type: string
+                example: This is an internal server error.
+    400APIError:
+      description: This is a bad request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: 400
+              message:
+                type: string
+                example: This is a bad request (Verify requestBody).
+    409APIError:
+      description: An existing item already exists.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: 409
+              message:
+                type: string
+                example: An existing item already exists.
+    200APIMessage:
+      description: Operation done successfully.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: 200
+              message:
+                type: string
+                example: Operation done successfully.

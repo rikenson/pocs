@@ -1,0 +1,58 @@
+#___________________________________________________________________________
+#1.Add brand workshop
+post:
+  tags:
+    - workshop-endpoints
+  summary: Register new workshop.
+  operationId: addWorkshop
+  description: Add a brand new workshop
+  parameters:
+    - $ref: "../parameters/common.yml#/token"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/workshop.yml#/WorkshopRequest"
+  responses:
+    "201":
+      description: Item created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/workshop.yml#/WorkshopResponse"
+    "400":
+      $ref: "../responses/common.yml#/400APIError"
+    "409":
+      $ref: "../responses/common.yml#/409APIError"
+    "500":
+      $ref: "../responses/common.yml#/500APIError"
+
+#___________________________________________________________________________
+#4.Find page of workshop
+get:
+  tags:
+    - workshop-endpoints
+  summary: Fetch pages of workshops filtered by criteria.
+  operationId: searchWorkshops
+  parameters:
+    - $ref: "../parameters/common.yml#/token"
+    - $ref: "../parameters/common.yml#/status"
+    - $ref: "../parameters/common.yml#/preferredField"
+    - $ref: "../parameters/common.yml#/startDateTime"
+    - $ref: "../parameters/common.yml#/endDateTime"
+  responses:
+    "200":
+      description: Found item structure.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../schemas/workshop.yml#/WorkshopResponse"
+
+    "400":
+      $ref: "../responses/common.yml#/400APIError"
+    "409":
+      $ref: "../responses/common.yml#/409APIError"
+    "500":
+      $ref: "../responses/common.yml#/500APIError"

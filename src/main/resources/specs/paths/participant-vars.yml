@@ -1,0 +1,25 @@
+#___________________________________________________________________________
+#1.Find all participants for a specific workspace
+get:
+  tags:
+    - participant-endpoints
+  summary: Find all participants for a specific workspace.
+  operationId: searchCurrentParticipant
+  parameters:
+    - $ref: "../parameters/common.yml#/token"
+    - $ref: "../parameters/common.yml#/id"
+  responses:
+    "200":
+      description: Found item by id.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../schemas/participant.yml#/ParticipantResponse"
+    "400":
+      $ref: "../responses/common.yml#/400APIError"
+    "409":
+      $ref: "../responses/common.yml#/409APIError"
+    "500":
+      $ref: "../responses/common.yml#/500APIError"

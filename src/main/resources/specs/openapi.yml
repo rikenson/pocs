@@ -1,0 +1,47 @@
+openapi: 3.0.0
+servers:
+  - url: "http://localhost:4000/v1"
+    description: Server description
+
+info:
+  title: workshop-management-rest
+  version: 1.0.0
+  description: Workshop Management service
+  contact:
+    email: infos-dev@mendoz.labs
+  license:
+    name: SBT 1.0
+    url: "https://www.licence.mendoz.labs"
+
+tags:
+  - name: workshop-endpoints
+    description: Operations on base workshop entities
+  - name: participant-endpoints
+    description: Operations on base participants entities
+
+paths:
+  /v1/workshops:
+    $ref: "./paths/workshop.yml"
+  /v1/workshops/{id}:
+    $ref: "./paths/workshop-vars.yml"
+  /v1/workshops/participants/{id}/{participantId}:
+    $ref: "./paths/participant.yml"
+  /v1/workshops/participants/{id}:
+    $ref: "./paths/participant-vars.yml"
+
+components:
+  securitySchemes:
+    implicit:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: "http://localhost/oauth/auth"
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
+  parameters:
+    $ref: "./parameters/common.yml"
+  schemas:
+    $ref: "./schemas/workshop.yml"
+  responses:
+    $ref: "./responses/common.yml"

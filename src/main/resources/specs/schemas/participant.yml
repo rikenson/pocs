@@ -1,0 +1,37 @@
+$ref: "./common.yml"
+ParticipantRequest:
+  type: object
+  required:
+    - firstname
+    - lastname
+    - role
+  properties:
+    firstname:
+      type: string
+      example: Wisly
+    lastname:
+      type: string
+      example: CLERVILUS
+    role:
+      type: string
+      default: UNKNOWN
+      enum:
+        - DEVELOPER
+        - FUNCTIONAL_ANALYST
+        - ARCHITECT
+        - OTHER
+        - UNKNOWN
+
+
+UpdatedParticipantRequest:
+  allOf:
+    - $ref: "#/Audit"
+    - $ref: "#/ParticipantRequest"
+  type: object
+
+
+ParticipantResponse:
+  allOf:
+    - $ref: "#/Audit"
+    - $ref: "#/ParticipantRequest"
+  type: object
