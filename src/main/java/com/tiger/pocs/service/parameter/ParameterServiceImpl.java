@@ -68,7 +68,7 @@ public class ParameterServiceImpl implements ParameterService {
 
     @Override
     public Regulation loadC30Params() {
-        return null;
+        return Regulation.builder().build();
     }
 
 
