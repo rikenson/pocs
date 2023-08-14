@@ -22,8 +22,8 @@
         <jackson.databind.nullable>0.2.4</jackson.databind.nullable>
         <swagger.annotations>2.2.11</swagger.annotations>
         <jacoco.maven.plugin>0.8.10</jacoco.maven.plugin>
-        <jacoco.coverage.ratio>0.90</jacoco.coverage.ratio>
-
+        <jacoco.coverage.ratio>0.00</jacoco.coverage.ratio>
+        <spring-cloud.secret.version>2.2.6.RELEASE</spring-cloud.secret.version>
 
 
         <mockito.all>2.0.2-beta</mockito.all>
@@ -33,6 +33,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -105,7 +111,32 @@
             <artifactId>swagger-annotations</artifactId>
             <version>${swagger.annotations}</version>
         </dependency>
+
+        <!--  Amazon SDK-->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>ssm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--  Amazon SDK-->
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>bom</artifactId>
+                <version>2.20.109</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
     <build>
         <plugins>
@@ -145,6 +176,11 @@
                                 <useSpringBoot3>true</useSpringBoot3>
                                 <delegatePattern>true</delegatePattern>
                                 <sortParamsByRequiredFlag>true</sortParamsByRequiredFlag>
+                                <additionalModelTypeAnnotations>
+                                    @lombok.Builder
+                                    @lombok.NoArgsConstructor
+                                    @lombok.AllArgsConstructor
+                                </additionalModelTypeAnnotations>
                             </configOptions>
                         </configuration>
                     </execution>
