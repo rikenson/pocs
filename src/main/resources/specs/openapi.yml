@@ -20,6 +20,10 @@ tags:
     description: Operations on base participants entities
 
 paths:
+  /v1/parameters:
+    $ref: "./paths/params.yml"
+  /v1/parameters/{id}:
+    $ref: "./paths/params-vars.yml"
   /v1/workshops:
     $ref: "./paths/workshop.yml"
   /v1/workshops/{id}:
@@ -42,6 +46,6 @@ components:
   parameters:
     $ref: "./parameters/common.yml"
   schemas:
-    $ref: "./schemas/workshop.yml"
+    $ref: "./schemas/params.yml"
   responses:
     $ref: "./responses/common.yml"

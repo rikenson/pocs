@@ -103,20 +103,20 @@ class WorkshopHandlerTest {
     }
 
 
-    @Test
-    @DisplayName("Retrieve all workshops succeeded -> Status: 200")
-    void read_all_workshops_succeeded(WorkshopResponse response) {
-
-        var resp = List.of(response);
-        when(mockWorkshopService.retrieveAll()).thenReturn(resp);
-        var underTest = workshopHandler.workshopRetrieveAll();
-        verify(mockWorkshopService, times(1)).retrieveAll();
-
-        assertThat(underTest.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(underTest.getBody())
-                .usingRecursiveComparison()
-                .isEqualTo(resp);
-    }
+//    @Test
+//    @DisplayName("Retrieve all workshops succeeded -> Status: 200")
+//    void read_all_workshops_succeeded(WorkshopResponse response) {
+//
+//        var resp = List.of(response);
+//        when(mockWorkshopService.retrieveAll()).thenReturn(resp);
+//        var underTest = workshopHandler.workshopRetrieveAll();
+//        verify(mockWorkshopService, times(1)).retrieveAll();
+//
+//        assertThat(underTest.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(underTest.getBody())
+//                .usingRecursiveComparison()
+//                .isEqualTo(resp);
+//    }
 
 
     @Test

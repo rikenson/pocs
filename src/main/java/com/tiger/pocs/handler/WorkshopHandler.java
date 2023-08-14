@@ -4,6 +4,7 @@ import com.tiger.pocs.payload.ParticipantRequest;
 import com.tiger.pocs.payload.UpdatedWorkshopRequest;
 import com.tiger.pocs.payload.WorkshopRequest;
 import com.tiger.pocs.payload.WorkshopResponse;
+import com.tiger.pocs.service.MessagePublisher;
 import com.tiger.pocs.service.WorkshopService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,12 @@ import java.util.UUID;
 public class WorkshopHandler {
 
     private final WorkshopService service;
+    private final MessagePublisher publisher;
 
-    public WorkshopHandler(WorkshopService service) {
+
+    public WorkshopHandler(WorkshopService service, MessagePublisher publisher) {
         this.service = service;
+        this.publisher = publisher;
     }
 
     @PostMapping
@@ -35,6 +39,7 @@ public class WorkshopHandler {
             @PathVariable("uuid") UUID uuid) {
         return ResponseEntity.ok(service.edit(request, uuid));
     }
+
     @PatchMapping("{uuid}")
     public ResponseEntity<WorkshopResponse> addParticipants(
             @RequestBody @Validated List<ParticipantRequest> request,
@@ -49,6 +54,7 @@ public class WorkshopHandler {
 
     @GetMapping
     public ResponseEntity<List<WorkshopResponse>> workshopRetrieveAll() {
+        publisher.sendNotification(null, null);
         return ResponseEntity.ok(service.retrieveAll());
     }
 

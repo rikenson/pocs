@@ -17,6 +17,101 @@ tags:
   - name: participant-endpoints
     description: Operations on base participants entities
 paths:
+  /v1/parameters:
+    post:
+      tags:
+        - param-endpoints
+      summary: Register new param.
+      operationId: addParam
+      description: Add a brand new param
+      parameters:
+        - $ref: '#/components/parameters/token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParamRequest'
+      responses:
+        '201':
+          description: Item created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParamResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+    get:
+      tags:
+        - param-endpoints
+      summary: Fetch pages of params filtered by criteria.
+      operationId: searchParams
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/lastModifiedDate'
+      responses:
+        '200':
+          description: Found item structure.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ParamResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+  '/v1/parameters/{id}':
+    put:
+      tags:
+        - param-endpoints
+      summary: Update a specific param by name.
+      operationId: updateParam
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedParamRequest'
+      responses:
+        '200':
+          description: Found item structure.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParamResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
+    delete:
+      tags:
+        - param-endpoints
+      summary: Delete a specific param by name.
+      operationId: deleteParam
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          $ref: '#/components/responses/200APIMessage'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
   /v1/workshops:
     post:
       tags:
@@ -30,14 +125,53 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WorkshopRequest'
+              type: object
+              required:
+                - name
+                - description
+                - startDateTime
+                - endDateTime
+                - status
+              properties:
+                name:
+                  type: string
+                  example: Unit Testing
+                description:
+                  type: string
+                  example: Workshop sur la mise en place des test unitaires...
+                status:
+                  type: string
+                  default: PENDING
+                  enum:
+                    - ENDED
+                    - STARTED
+                    - CANCELED
+                    - PENDING
+                startDateTime:
+                  type: string
+                  format: date-time
+                  example: 2017-07-21T17:32:28.000Z
+                endDateTime:
+                  type: string
+                  format: date-time
+                  example: 2017-07-21T17:32:28.000Z
       responses:
         '201':
           description: Item created successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkshopResponse'
+                allOf:
+                  - $ref: '#/components/schemas/Audit'
+                  - $ref: '#/components/schemas/WorkshopRequest'
+                type: object
+                required:
+                  - participants
+                properties:
+                  participants:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ParticipantResponse'
         '400':
           $ref: '#/components/responses/400APIError'
         '409':
@@ -63,7 +197,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/WorkshopResponse'
+                  $ref: '#/paths/~1v1~1workshops/post/responses/201/content/application~1json/schema'
         '400':
           $ref: '#/components/responses/400APIError'
         '409':
@@ -76,7 +210,7 @@ paths:
         - workshop-endpoints
       summary: Update a specific workshop by id.
       operationId: updateWorkshop
-      security: [ ]
+      security: []
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -84,14 +218,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdatedWorkshopRequest'
+              allOf:
+                - $ref: '#/components/schemas/Audit'
+                - $ref: '#/components/schemas/WorkshopRequest'
+              type: object
       responses:
         '200':
           description: Found item structure.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkshopResponse'
+                $ref: '#/paths/~1v1~1workshops/post/responses/201/content/application~1json/schema'
         '400':
           $ref: '#/components/responses/400APIError'
         '409':
@@ -120,7 +257,7 @@ paths:
         - workshop-endpoints
       summary: add participants to workshop by id.
       operationId: patchWorkshop
-      security: [ ]
+      security: []
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -157,7 +294,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkshopResponse'
+                $ref: '#/paths/~1v1~1workshops/post/responses/201/content/application~1json/schema'
         '400':
           $ref: '#/components/responses/400APIError'
         '409':
@@ -178,7 +315,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkshopResponse'
+                $ref: '#/paths/~1v1~1workshops/post/responses/201/content/application~1json/schema'
         '400':
           $ref: '#/components/responses/400APIError'
         '409':
@@ -191,7 +328,7 @@ paths:
         - participant-endpoints
       summary: Update a specific participant by id.
       operationId: updateParticipant
-      security: [ ]
+      security: []
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -255,7 +392,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ParticipantResponse'
+                  $ref: '#/paths/~1v1~1workshops~1participants~1%7Bid%7D~1%7BparticipantId%7D/put/responses/200/content/application~1json/schema'
         '400':
           $ref: '#/components/responses/400APIError'
         '409':
@@ -291,6 +428,15 @@ components:
         type: string
         format: date-time
         example: 2017-07-21T17:32:28.000Z
+    lastModifiedDate:
+      in: query
+      name: endDateTime
+      description: Fields to consider to filter by last modified datetime.
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: 2017-07-21T17:32:28.000Z
     preferredField:
       in: query
       name: preferredField
@@ -321,6 +467,14 @@ components:
       schema:
         type: string
         example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    name:
+      in: path
+      name: name
+      description: Current entity name.
+      required: true
+      schema:
+        type: string
+        example: entity name
     token:
       in: header
       name: token
@@ -338,6 +492,161 @@ components:
         type: string
         example: d815d301-8bae-4dd0-a292-56e0cb7509d8
   schemas:
+    ParamRequest:
+      type: object
+      required:
+        - name
+        - value
+        - type
+      properties:
+        name:
+          type: string
+          example: /config/pocs/message
+        value:
+          type: string
+          example: Integration SSM Parameter Service Spring Boot
+        type:
+          type: string
+          example: String
+        version:
+          type: integer
+          example: 1
+        lastModifiedDate:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28.000Z
+    UpdatedParamRequest:
+      allOf:
+        - $ref: '#/components/schemas/ParamRequest'
+      type: object
+    ParamResponse:
+      allOf:
+        - $ref: '#/components/schemas/ParamRequest'
+      type: object
+    Regulation:
+      type: object
+      required:
+        - code
+        - notifications
+        - remittance
+        - retention
+      properties:
+        code:
+          type: string
+          example: C30
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        remittance:
+          $ref: '#/components/schemas/Remittance'
+        retention:
+          $ref: '#/components/schemas/Period'
+    Notification:
+      type: object
+      required:
+        - type
+        - periods
+      properties:
+        type:
+          type: string
+          default: MFT
+          enum:
+            - EMAIL
+            - MFT
+            - FAX
+        periods:
+          type: array
+          items:
+            $ref: '#/components/schemas/Period'
+    Period:
+      type: object
+      required:
+        - frequency
+        - value
+        - status
+      properties:
+        frequency:
+          type: integer
+          example: 1
+        value:
+          type: integer
+          example: 24
+        status:
+          type: boolean
+          example: false
+    Retention:
+      type: object
+      required:
+        - frequency
+        - status
+      properties:
+        frequency:
+          type: integer
+          example: 108
+        status:
+          type: boolean
+          example: false
+    Remittance:
+      type: object
+      required:
+        - period
+        - generatedXMLFile
+      properties:
+        period:
+          $ref: '#/components/schemas/Period'
+        sequence:
+          type: integer
+          example: 1
+    generatedXMLFile:
+      type: object
+      required:
+        - validatorPath
+        - maxSize
+        - minSize
+        - requiredFields
+      properties:
+        validatorPath:
+          type: string
+          example: 's3://remittance/pl17/xsd/pl17.xsd'
+        period:
+          $ref: '#/components/schemas/Period'
+        maxSize:
+          $ref: '#/components/schemas/FileSize'
+        minSize:
+          $ref: '#/components/schemas/FileSize'
+        requiredFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+    FileSize:
+      type: object
+      required:
+        - size
+        - unit
+      properties:
+        size:
+          type: integer
+          example: 10
+        unit:
+          type: string
+          default: GB
+          enum:
+            - KB
+            - MB
+            - GB
+    Field:
+      type: object
+      required:
+        - mandatory
+        - name
+      properties:
+        mandatory:
+          type: boolean
+          example: false
+        name:
+          type: string
+          example: firstName
     WorkshopRequest:
       type: object
       required:

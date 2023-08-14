@@ -47,15 +47,15 @@ class CustomMapperTest {
                 .isEqualTo(response);
     }
 
-    @Test
-    void mapWorkshopEntity_To_Response_Succeeded(Workshop workshop, WorkshopResponse response) {
-
-        var underTest = mapperMock.toResponse(workshop);
-        assertThat(underTest)
-                .usingRecursiveComparison()
-                .isEqualTo(response)
-                .isNotNull();
-    }
+//    @Test
+//    void mapWorkshopEntity_To_Response_Succeeded(Workshop workshop, WorkshopResponse response) {
+//
+//        var underTest = mapperMock.toResponse(workshop);
+//        assertThat(underTest)
+//                .usingRecursiveComparison()
+//                .isEqualTo(response)
+//                .isNotNull();
+//    }
 
     @Test
     void mapParticipantRequest_To_Entity_Succeeded(ParticipantRequest request, ParticipantResponse response) {

@@ -18,6 +18,16 @@ endDateTime:
     format: date-time
     example: 2017-07-21T17:32:28.000Z
 
+lastModifiedDate:
+  in: query
+  name: endDateTime
+  description: Fields to consider to filter by last modified datetime.
+  required: false
+  schema:
+    type: string
+    format: date-time
+    example: 2017-07-21T17:32:28.000Z
+
 preferredField:
   in: query
   name: preferredField
@@ -49,6 +59,15 @@ id:
   schema:
     type: string
     example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+
+name:
+  in: path
+  name: name
+  description: Current entity name.
+  required: true
+  schema:
+    type: string
+    example: entity name
 
 token:
   in: header
