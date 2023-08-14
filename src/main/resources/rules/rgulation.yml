@@ -1,0 +1,37 @@
+regulations:
+  - code: pl17
+    notifications:
+      - type: email
+        periods:
+          - frequency: 1
+            value: 24 #value in days
+            status: true
+    remittance:
+      period:
+        frequency: 1
+        value: 120 #value in days
+        status: true
+      generatedXMLFile:
+        validatorPath: s3://remittance/pl17/xsd/pl17.xsd
+        maxSize:
+          size: 150
+          unit: MB
+        minSize:
+          size: 1
+          unit: MB
+        requiredFields: [ firstName, lastName, lob, accountNumber ]
+      generatedCSVFiles:
+        - validatorPath: s3://remittance/pl17/xsd/pl17.csv
+          maxSize:
+            size: 150
+            unit: MB
+          minSize:
+            size: 1
+            unit: MB
+          lob:
+            name: nbfm
+            mftBoxPath: mft://app.mft/123
+          requiredFields: [ firstName, lastName, lob, accountNumber ]
+    retention:
+      frequency: 108
+      status: true
