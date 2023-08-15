@@ -1,0 +1,89 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id "org.openapi.generator" version "6.3.0"
+    id "jacoco"
+    id "org.sonarqube" version "4.0.0.2929"
+    id 'info.solidsoft.pitest' version '1.9.0'
+}
+jar {
+    enabled = true
+}
+
+sonar {
+    properties {
+        property 'sonar.individual-management-rest', 'Individual Management Rest SonarQube Scanner'
+    }
+}
+
+group = 'com.tmt'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+project.ext.local = true
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    if (project.hasProperty('local')) {
+        dependencies {}
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive:3.0.6'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:3.0.4'
+    implementation 'org.springframework.boot:spring-boot-starter-aop:3.0.5'
+    implementation 'org.springframework.retry:spring-retry:2.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:3.0.5'
+
+    implementation 'org.openapitools:openapi-generator-cli:6.4.0'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.0.4'
+    testImplementation 'io.projectreactor:reactor-test:3.5.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testImplementation 'org.mockito:mockito-core:5.2.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.2.0'
+
+
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    testCompileOnly 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "openapi/oas3.yaml".toString()
+    outputDir = "$projectDir".toString()
+    invokerPackage = "com.tmt.individual.domain"
+    modelPackage = "com.tmt.individual.domain.payload"
+    generateModelDocumentation = false
+    generateApiDocumentation = false
+    generateApiTests = false
+    configOptions = [useSpringBoot3: "true", dateLibrary: "java8"]
+    globalProperties = [models: ""]
+    importMappings = [
+            "java.time.OffsetDateTime": "java.time.LocalDateTime",
+            "LocalDate"               : "java.time.LocalDate"
+    ]
+    typeMappings = [
+            OffsetDateTime: "java.time.LocalDateTime",
+            LocalDate     : "java.time.LocalDate"
+    ]
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+
+}
+
+
