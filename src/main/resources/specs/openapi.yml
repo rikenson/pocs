@@ -42,6 +42,6 @@ components:
   parameters:
     $ref: "./parameters/common.yml"
   schemas:
-    $ref: "./schemas/workshop.yml"
+    $ref: "./schemas/graph.yml"
   responses:
     $ref: "./responses/common.yml"

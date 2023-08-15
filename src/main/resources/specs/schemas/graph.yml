@@ -1,0 +1,16 @@
+$ref: "./params.yml"
+
+Domain:
+  allOf:
+    - $ref: "#/Audit"
+  type: object
+  required:
+    - code
+    - name
+  properties:
+    code:
+      type: string
+      example: INV
+    name:
+      type: string
+      example: Investment

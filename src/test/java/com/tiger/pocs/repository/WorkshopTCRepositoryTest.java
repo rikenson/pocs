@@ -3,6 +3,7 @@ package com.tiger.pocs.repository;
 import com.tiger.pocs.domain.entity.Workshop;
 import com.tiger.pocs.paramResolver.WorkshopEntityParameterResolver;
 import com.tiger.pocs.paramResolver.WorkshopResponseParameterResolver;
+import com.tiger.pocs.repository.rds.WorkshopRepository;
 import com.tiger.pocs.utils.CommonPostgresqlContainer;
 import com.tiger.pocs.utils.FixedValues;
 import org.junit.jupiter.api.AfterAll;

@@ -1,4 +1,4 @@
-package com.tiger.pocs.repository;
+package com.tiger.pocs.repository.rds;
 
 import com.tiger.pocs.domain.entity.Workshop;
 import org.springframework.data.jpa.repository.JpaRepository;

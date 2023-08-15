@@ -21,3 +21,8 @@ server:
 aws:
   ssm:
     region: ca-central-1
+
+thinkerpop:
+  db:
+    host: localhost
+    port: 8182

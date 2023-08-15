@@ -1,10 +1,8 @@
 package com.tiger.pocs.handler;
 
-import com.tiger.pocs.payload.ParticipantRequest;
-import com.tiger.pocs.payload.UpdatedWorkshopRequest;
-import com.tiger.pocs.payload.WorkshopRequest;
-import com.tiger.pocs.payload.WorkshopResponse;
+import com.tiger.pocs.payload.*;
 import com.tiger.pocs.service.WorkshopService;
+import com.tiger.pocs.service.domain.DomainService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,14 +17,20 @@ import java.util.UUID;
 public class WorkshopHandler {
 
     private final WorkshopService service;
+    private final DomainService domainService;
 
-    public WorkshopHandler(WorkshopService service) {
+    public WorkshopHandler(WorkshopService service, DomainService domainService) {
         this.service = service;
+        this.domainService = domainService;
     }
 
     @PostMapping
     public ResponseEntity<WorkshopResponse> workshopPost(@RequestBody @Validated WorkshopRequest request) {
         return new ResponseEntity<>(service.add(request), HttpStatus.CREATED);
+    }
+    @PostMapping("/domains")
+    public ResponseEntity<String> domainPost(@RequestBody Domain request) {
+        return new ResponseEntity<>(domainService.add(request), HttpStatus.CREATED);
     }
 
     @PutMapping("{uuid}")
