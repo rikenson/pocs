@@ -21,8 +21,28 @@ server:
 aws:
   ssm:
     region: ca-central-1
+  neptune:
+    host: neptunedbinstance-zvdnrtvv7jvh.c9popfp3zboh.ca-central-1.neptune.amazonaws.com
+    port: 8182
+    username:
+    password:
+    enableSsl: false
+    keystore:
+    keystorePassword:
+    maxConnectionPoolSize: 2
+    maxInProcessPerConnection: 200 #Alaway same value with maxSimultaneousUsagePerConnection
+    maxSimultaneousUsagePerConnection: 200 #Alaway same value with maxInProcessPerConnection
+    minSimultaneousUsagePerConnection: 2 # to be increased if query returns a lot of data
 
 thinkerpop:
   db:
     host: localhost
     port: 8182
+
+
+jnosql:
+  graph:
+    provider: <CLASS-DRIVER>
+    host: localhost:8182
+    user: ""
+    password: ""

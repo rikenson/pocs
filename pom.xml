@@ -129,6 +129,12 @@
             <artifactId>gremlin-driver</artifactId>
             <version>3.6.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.jnosql.mapping</groupId>
+            <artifactId>jnosql-mapping-graph</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
