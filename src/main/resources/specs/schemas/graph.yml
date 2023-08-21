@@ -14,3 +14,33 @@ Domain:
     name:
       type: string
       example: Investment
+
+Actor:
+  type: object
+  required:
+    - id
+    - firstName
+    - lastName
+    - gender
+    - bithDate
+    - birthPlace
+  properties:
+    id:
+      type: string
+      example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    firstName:
+      type: string
+      example: "Rikenson"
+    lastName:
+      type: string
+      example: "JACQUES"
+    gender:
+      type: string
+      example: "Male"
+    birthDate:
+      type: string
+      format: date
+      example: 1989-07-01
+    birthPlace:
+      type: string
+      example: "Petit Goave"
