@@ -18,7 +18,6 @@ public class ParameterHandler {
 
     private final ParameterService service;
 
-
     public ParameterHandler(ParameterService service) {
         this.service = service;
     }

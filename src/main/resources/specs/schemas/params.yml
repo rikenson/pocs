@@ -1,11 +1,7 @@
-$ref: "./workshop.yml"
+$ref: "./sample.yml"
 
-ParamRequest:
+Param:
   type: object
-  required:
-    - name
-    - value
-    - type
   properties:
     name:
       type: string
@@ -24,149 +20,23 @@ ParamRequest:
       format: date-time
       example: 2017-07-21T17:32:28.000Z
 
-
-UpdatedParamRequest:
+ParamRequest:
   allOf:
-    - $ref: "#/ParamRequest"
+    - $ref: "#/Param"
   type: object
+  required:
+    - name
+    - value
+    - type
 
 
 ParamResponse:
   allOf:
+    - $ref: "#/Audit"
     - $ref: "#/ParamRequest"
   type: object
-
-
-Regulation:
-  type: object
-  required:
-    - code
-    - notifications
-    - remittance
-    - retention
   properties:
-    code:
+    lastModifiedDate:
       type: string
-      example: C30
-    notifications:
-      type: array
-      items:
-        $ref: "#/Notification"
-    remittance:
-      $ref: "#/Remittance"
-    retention:
-      $ref: "#/Period"
-
-Notification:
-  type: object
-  required:
-    - type
-    - periods
-  properties:
-    type:
-      type: string
-      default: MFT
-      enum:
-        - EMAIL
-        - MFT
-        - FAX
-    periods:
-      type: array
-      items:
-        $ref: "#/Period"
-
-Period:
-  type: object
-  required:
-    - frequency
-    - value
-    - status
-  properties:
-    frequency:
-      type: integer
-      example: 1
-    value:
-      type: integer
-      example: 24
-    status:
-      type: boolean
-      example: false
-
-Retention:
-  type: object
-  required:
-    - frequency
-    - status
-  properties:
-    frequency:
-      type: integer
-      example: 108
-    status:
-      type: boolean
-      example: false
-
-
-
-Remittance:
-  type: object
-  required:
-    - period
-    - generatedXMLFile
-  properties:
-    period:
-      $ref: "#/Period"
-    sequence:
-      type: integer
-      example: 1
-
-generatedXMLFile:
-  type: object
-  required:
-    - validatorPath
-    - maxSize
-    - minSize
-    - requiredFields
-  properties:
-    validatorPath:
-      type: string
-      example: s3://remittance/pl17/xsd/pl17.xsd
-    period:
-      $ref: "#/Period"
-    maxSize:
-      $ref: "#/FileSize"
-    minSize:
-      $ref: "#/FileSize"
-    requiredFields:
-      type: array
-      items:
-        $ref: "#/Field"
-
-FileSize:
-  type: object
-  required:
-    - size
-    - unit
-  properties:
-    size:
-      type: integer
-      example: 10
-    unit:
-      type: string
-      default: GB
-      enum:
-        - KB
-        - MB
-        - GB
-
-Field:
-  type: object
-  required:
-    - mandatory
-    - name
-  properties:
-    mandatory:
-      type: boolean
-      example: false
-    name:
-      type: string
-      example: firstName
+      format: date-time
+      example: 2017-07-21T17:32:28.000Z

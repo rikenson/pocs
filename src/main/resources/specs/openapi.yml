@@ -1,12 +1,12 @@
 openapi: 3.0.0
 servers:
-  - url: "http://localhost:4000/v1"
+  - url: "http://localhost:4000"
     description: Server description
 
 info:
-  title: workshop-management-rest
+  title: sample-management-rest
   version: 1.0.0
-  description: Workshop Management service
+  description: Sample Management service
   contact:
     email: infos-dev@mendoz.labs
   license:
@@ -14,20 +14,30 @@ info:
     url: "https://www.licence.mendoz.labs"
 
 tags:
-  - name: workshop-endpoints
-    description: Operations on base workshop entities
-  - name: participant-endpoints
-    description: Operations on base participants entities
+  - name: sample-endpoints
+    description: Samples management operations
+  - name: graph-sample-endpoints
+    description: Graph samples management operations
+  - name: aws-params-endpoints
+    description: AWS Parameter management operations
 
 paths:
-  /v1/workshops:
-    $ref: "./paths/workshop.yml"
-  /v1/workshops/{id}:
-    $ref: "./paths/workshop-vars.yml"
-  /v1/workshops/participants/{id}/{participantId}:
-    $ref: "./paths/participant.yml"
-  /v1/workshops/participants/{id}:
-    $ref: "./paths/participant-vars.yml"
+  /samples:
+    $ref: "./paths/sample/get-post.yml"
+  /samples/{id}:
+    $ref: "./paths/sample/get-put-delete-patch.yml"
+
+  /graph-samples:
+    $ref: "./paths/graph/get-post.yml"
+  /graph-samples/{id}:
+    $ref: "./paths/graph/get-put-delete-patch.yml"
+
+  /aws-parameters:
+    $ref: "./paths/params/post.yml"
+  /aws-parameters/{key}:
+    $ref: "./paths/params/get-by-key.yml"
+  /aws-parameters/path:
+    $ref: "./paths/params/get-by-path.yml"
 
 components:
   securitySchemes:
@@ -42,6 +52,6 @@ components:
   parameters:
     $ref: "./parameters/common.yml"
   schemas:
-    $ref: "./schemas/graph.yml"
+    $ref: "./schemas/params.yml"
   responses:
     $ref: "./responses/common.yml"

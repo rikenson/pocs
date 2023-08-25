@@ -1,23 +1,26 @@
 spring:
+  application:
+    name: pocs
   datasource:
     driver-class-name: org.postgresql.Driver
     username: usrdev
     password: P@ssw0rd
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/workshop-management-rest
+    url: jdbc:postgresql://localhost:5432/pocs_db
     initialization-mode: always
     continue-on-error: true
   jpa:
+    defer-datasource-initialization: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: true
-        ddl-auto: create
+        ddl-auto: update
       generate-ddl: true
 server:
   port: 4000
   servlet:
-    context-path: /workshop-management-rest
+    context-path: /pocs
 aws:
   ssm:
     region: ca-central-1
@@ -38,11 +41,3 @@ thinkerpop:
   db:
     host: localhost
     port: 8182
-
-
-jnosql:
-  graph:
-    provider: <CLASS-DRIVER>
-    host: localhost:8182
-    user: ""
-    password: ""

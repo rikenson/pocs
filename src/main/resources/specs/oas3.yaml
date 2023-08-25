@@ -1,93 +1,50 @@
 openapi: 3.0.0
 servers:
-  - url: 'http://localhost:4000/v1'
+  - url: 'http://localhost:4000'
     description: Server description
 info:
-  title: workshop-management-rest
+  title: sample-management-rest
   version: 1.0.0
-  description: Workshop Management service
+  description: Sample Management service
   contact:
     email: infos-dev@mendoz.labs
   license:
     name: SBT 1.0
     url: 'https://www.licence.mendoz.labs'
 tags:
-  - name: workshop-endpoints
-    description: Operations on base workshop entities
-  - name: participant-endpoints
-    description: Operations on base participants entities
+  - name: sample-endpoints
+    description: Samples management operations
+  - name: graph-sample-endpoints
+    description: Graph samples management operations
+  - name: aws-params-endpoints
+    description: AWS Parameter management operations
 paths:
-  /v1/workshops:
+  /samples:
     post:
       tags:
-        - workshop-endpoints
-      summary: Register new workshop.
-      operationId: addWorkshop
-      description: Add a brand new workshop
+        - sample-endpoints
+      summary: Register new sample.
+      operationId: addSample
+      description: Add a brand new sample
       parameters:
         - $ref: '#/components/parameters/token'
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - name
-                - description
-                - startDateTime
-                - endDateTime
-                - status
-              properties:
-                name:
-                  type: string
-                  example: Unit Testing
-                description:
-                  type: string
-                  example: Workshop sur la mise en place des test unitaires...
-                status:
-                  type: string
-                  default: PENDING
-                  enum:
-                    - ENDED
-                    - STARTED
-                    - CANCELED
-                    - PENDING
-                startDateTime:
-                  type: string
-                  format: date-time
-                  example: 2017-07-21T17:32:28.000Z
-                endDateTime:
-                  type: string
-                  format: date-time
-                  example: 2017-07-21T17:32:28.000Z
+              $ref: '#/components/schemas/SampleRequest'
       responses:
         '201':
           description: Item created successfully.
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Audit'
-                  - $ref: '#/components/schemas/WorkshopRequest'
-                type: object
-                required:
-                  - participants
-                properties:
-                  participants:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ParticipantResponse'
-        '400':
-          $ref: '#/components/responses/400APIError'
-        '409':
-          $ref: '#/components/responses/409APIError'
-        '500':
-          $ref: '#/components/responses/500APIError'
+                $ref: '#/components/schemas/SampleResponse'
     get:
       tags:
-        - workshop-endpoints
-      summary: Fetch pages of workshops filtered by criteria.
-      operationId: searchWorkshops
+        - sample-endpoints
+      summary: Fetch pages of samples filtered by criteria.
+      operationId: searchSamples
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/status'
@@ -100,22 +57,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
                 items:
-                  $ref: '#/paths/~1v1~1workshops/post/responses/201/content/application~1json/schema'
-        '400':
-          $ref: '#/components/responses/400APIError'
-        '409':
-          $ref: '#/components/responses/409APIError'
-        '500':
-          $ref: '#/components/responses/500APIError'
-  '/v1/workshops/{id}':
+                  $ref: "#/components/schemas/SampleResponse"
+  '/samples/{id}':
     put:
       tags:
-        - workshop-endpoints
-      summary: Update a specific workshop by id.
-      operationId: updateWorkshop
-      security: []
+        - sample-endpoints
+      summary: Update a specific sample by id.
+      operationId: updateSample
+      security: [ ]
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -123,46 +73,140 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Audit'
-                - $ref: '#/components/schemas/WorkshopRequest'
-              type: object
+              $ref: '#/components/schemas/UpdatedSampleRequest'
       responses:
         '200':
           description: Found item structure.
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1v1~1workshops/post/responses/201/content/application~1json/schema'
-        '400':
-          $ref: '#/components/responses/400APIError'
-        '409':
-          $ref: '#/components/responses/409APIError'
-        '500':
-          $ref: '#/components/responses/500APIError'
+                $ref: '#/components/schemas/SampleResponse'
     delete:
       tags:
-        - workshop-endpoints
-      summary: Delete a specific workshop by id.
-      operationId: deleteWorkshop
+        - sample-endpoints
+      summary: Delete a specific sample by id.
+      operationId: deleteSample
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
       responses:
         '200':
           $ref: '#/components/responses/200APIMessage'
-        '400':
-          $ref: '#/components/responses/400APIError'
-        '409':
-          $ref: '#/components/responses/409APIError'
-        '500':
-          $ref: '#/components/responses/500APIError'
     patch:
       tags:
-        - workshop-endpoints
-      summary: add participants to workshop by id.
-      operationId: patchWorkshop
-      security: []
+        - sample-endpoints
+      summary: patch to sample by id.
+      operationId: patchSample
+      security: [ ]
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSampleRequest'
+      responses:
+        '200':
+          description: Found item structure.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleResponse'
+    get:
+      tags:
+        - sample-endpoints
+      summary: Fetch a specific sample.
+      operationId: searchCurrentSample
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Found item by id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleResponse'
+  /graph-samples:
+    post:
+      tags:
+        - graph-sample-endpoints
+      summary: Register new sample.
+      operationId: addGraphSample
+      description: Add a brand new sample
+      parameters:
+        - $ref: '#/components/parameters/token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SampleRequest'
+      responses:
+        '201':
+          description: Item created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleResponse'
+    get:
+      tags:
+        - graph-sample-endpoints
+      summary: Fetch pages of samples filtered by criteria.
+      operationId: searchGraphSamples
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/preferredField'
+        - $ref: '#/components/parameters/startDateTime'
+        - $ref: '#/components/parameters/endDateTime'
+      responses:
+        '200':
+          description: Found item structure.
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SampleResponse'
+  '/graph-samples/{id}':
+    put:
+      tags:
+        - graph-sample-endpoints
+      summary: Update a specific sample by id.
+      operationId: updateGraphSample
+      security: [ ]
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatedSampleRequest'
+      responses:
+        '200':
+          description: Found item structure.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleResponse'
+    delete:
+      tags:
+        - graph-sample-endpoints
+      summary: Delete a specific sample by id.
+      operationId: deleteGraphSample
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/200APIMessage'
+    patch:
+      tags:
+        - graph-sample-endpoints
+      summary: patch to sample by id.
+      operationId: patchGraphSample
+      security: [ ]
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -172,45 +216,19 @@ paths:
             schema:
               type: array
               items:
-                type: object
-                required:
-                  - firstname
-                  - lastname
-                  - role
-                properties:
-                  firstname:
-                    type: string
-                    example: Wisly
-                  lastname:
-                    type: string
-                    example: CLERVILUS
-                  role:
-                    type: string
-                    default: UNKNOWN
-                    enum:
-                      - DEVELOPER
-                      - FUNCTIONAL_ANALYST
-                      - ARCHITECT
-                      - OTHER
-                      - UNKNOWN
+                $ref: '#/components/schemas/PatchedSampleRequest'
       responses:
         '200':
           description: Found item structure.
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1v1~1workshops/post/responses/201/content/application~1json/schema'
-        '400':
-          $ref: '#/components/responses/400APIError'
-        '409':
-          $ref: '#/components/responses/409APIError'
-        '500':
-          $ref: '#/components/responses/500APIError'
+                $ref: '#/components/schemas/SampleResponse'
     get:
       tags:
-        - workshop-endpoints
-      summary: Fetch a specific workshop.
-      operationId: searchCurrentWorkshop
+        - graph-sample-endpoints
+      summary: Fetch a specific sample.
+      operationId: searchGraphCurrentSample
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -220,75 +238,53 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1v1~1workshops/post/responses/201/content/application~1json/schema'
-        '400':
-          $ref: '#/components/responses/400APIError'
-        '409':
-          $ref: '#/components/responses/409APIError'
-        '500':
-          $ref: '#/components/responses/500APIError'
-  '/v1/workshops/participants/{id}/{participantId}':
-    put:
+                $ref: '#/components/schemas/SampleResponse'
+  /aws-parameters:
+    post:
       tags:
-        - participant-endpoints
-      summary: Update a specific participant by id.
-      operationId: updateParticipant
-      security: []
+        - param-endpoints
+      summary: Register new param.
+      operationId: addParam
+      description: Add a brand new param
       parameters:
         - $ref: '#/components/parameters/token'
-        - $ref: '#/components/parameters/id'
-        - $ref: '#/components/parameters/participantId'
       requestBody:
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Audit'
-                - $ref: '#/components/schemas/ParticipantRequest'
-              type: object
+              $ref: '#/components/schemas/ParamRequest'
       responses:
-        '200':
-          description: Found item structure.
+        '201':
+          description: Item created successfully.
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Audit'
-                  - $ref: '#/components/schemas/ParticipantRequest'
-                type: object
-        '400':
-          $ref: '#/components/responses/400APIError'
-        '409':
-          $ref: '#/components/responses/409APIError'
-        '500':
-          $ref: '#/components/responses/500APIError'
-    delete:
-      tags:
-        - participant-endpoints
-      summary: Delete a specific participant by id.
-      operationId: deleteParticipant
-      parameters:
-        - $ref: '#/components/parameters/token'
-        - $ref: '#/components/parameters/id'
-        - $ref: '#/components/parameters/participantId'
-      responses:
-        '200':
-          $ref: '#/components/responses/200APIMessage'
-        '400':
-          $ref: '#/components/responses/400APIError'
-        '409':
-          $ref: '#/components/responses/409APIError'
-        '500':
-          $ref: '#/components/responses/500APIError'
-  '/v1/workshops/participants/{id}':
+                $ref: '#/components/schemas/ParamResponse'
+  '/aws-parameters/{key}':
     get:
       tags:
-        - participant-endpoints
-      summary: Find all participants for a specific workspace.
-      operationId: searchCurrentParticipant
+        - aws-params-endpoints
+      summary: Fetch a specific sample.
+      operationId: getParamByKey
       parameters:
         - $ref: '#/components/parameters/token'
-        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/key'
+      responses:
+        '200':
+          description: Found item by id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParamResponse'
+  /aws-parameters/path:
+    get:
+      tags:
+        - aws-params-endpoints
+      summary: Fetch a specific sample.
+      operationId: getParamByPath
+      parameters:
+        - $ref: '#/components/parameters/token'
+        - $ref: '#/components/parameters/path'
       responses:
         '200':
           description: Found item by id.
@@ -297,13 +293,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/paths/~1v1~1workshops~1participants~1%7Bid%7D~1%7BparticipantId%7D/put/responses/200/content/application~1json/schema'
-        '400':
-          $ref: '#/components/responses/400APIError'
-        '409':
-          $ref: '#/components/responses/409APIError'
-        '500':
-          $ref: '#/components/responses/500APIError'
+                  $ref: '#/components/schemas/ParamResponse'
 components:
   securitySchemes:
     implicit:
@@ -362,6 +352,7 @@ components:
       required: true
       schema:
         type: string
+        format: uuid
         example: d815d301-8bae-4dd0-a292-56e0cb7509d6
     token:
       in: header
@@ -371,64 +362,25 @@ components:
       schema:
         type: string
         example: 283jebuiVIVEG&#G#UGFXVVWWVD#h3dndon3j0d1hd119hd&ywyw^YS
-    participantId:
+    key:
       in: path
-      name: participantId
-      description: Current participant ID.
+      name: key
+      description: Current key.
       required: true
       schema:
         type: string
-        example: d815d301-8bae-4dd0-a292-56e0cb7509d8
+        example: key
+    path:
+      in: query
+      name: path
+      description: Current path.
+      required: true
+      schema:
+        type: string
+        example: path
   schemas:
-    Domain:
-      allOf:
-        - $ref: '#/components/schemas/Audit'
+    Param:
       type: object
-      required:
-        - code
-        - name
-      properties:
-        code:
-          type: string
-          example: INV
-        name:
-          type: string
-          example: Investment
-    Actor:
-      type: object
-      required:
-        - id
-        - firstName
-        - lastName
-        - gender
-        - bithDate
-        - birthPlace
-      properties:
-        id:
-          type: string
-          example: d815d301-8bae-4dd0-a292-56e0cb7509d6
-        firstName:
-          type: string
-          example: Rikenson
-        lastName:
-          type: string
-          example: JACQUES
-        gender:
-          type: string
-          example: Male
-        birthDate:
-          type: string
-          format: date
-          example: 1989-07-01T00:00:00.000Z
-        birthPlace:
-          type: string
-          example: Petit Goave
-    ParamRequest:
-      type: object
-      required:
-        - name
-        - value
-        - type
       properties:
         name:
           type: string
@@ -446,153 +398,33 @@ components:
           type: string
           format: date-time
           example: 2017-07-21T17:32:28.000Z
-    UpdatedParamRequest:
+    ParamRequest:
       allOf:
-        - $ref: '#/components/schemas/ParamRequest'
+        - $ref: '#/components/schemas/Param'
       type: object
+      required:
+        - name
+        - value
+        - type
     ParamResponse:
       allOf:
+        - $ref: '#/components/schemas/Audit'
         - $ref: '#/components/schemas/ParamRequest'
       type: object
-    Regulation:
-      type: object
-      required:
-        - code
-        - notifications
-        - remittance
-        - retention
       properties:
-        code:
+        lastModifiedDate:
           type: string
-          example: C30
-        notifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/Notification'
-        remittance:
-          $ref: '#/components/schemas/Remittance'
-        retention:
-          $ref: '#/components/schemas/Period'
-    Notification:
+          format: date-time
+          example: 2017-07-21T17:32:28.000Z
+    Sample:
       type: object
-      required:
-        - type
-        - periods
-      properties:
-        type:
-          type: string
-          default: MFT
-          enum:
-            - EMAIL
-            - MFT
-            - FAX
-        periods:
-          type: array
-          items:
-            $ref: '#/components/schemas/Period'
-    Period:
-      type: object
-      required:
-        - frequency
-        - value
-        - status
-      properties:
-        frequency:
-          type: integer
-          example: 1
-        value:
-          type: integer
-          example: 24
-        status:
-          type: boolean
-          example: false
-    Retention:
-      type: object
-      required:
-        - frequency
-        - status
-      properties:
-        frequency:
-          type: integer
-          example: 108
-        status:
-          type: boolean
-          example: false
-    Remittance:
-      type: object
-      required:
-        - period
-        - generatedXMLFile
-      properties:
-        period:
-          $ref: '#/components/schemas/Period'
-        sequence:
-          type: integer
-          example: 1
-    generatedXMLFile:
-      type: object
-      required:
-        - validatorPath
-        - maxSize
-        - minSize
-        - requiredFields
-      properties:
-        validatorPath:
-          type: string
-          example: 's3://remittance/pl17/xsd/pl17.xsd'
-        period:
-          $ref: '#/components/schemas/Period'
-        maxSize:
-          $ref: '#/components/schemas/FileSize'
-        minSize:
-          $ref: '#/components/schemas/FileSize'
-        requiredFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/Field'
-    FileSize:
-      type: object
-      required:
-        - size
-        - unit
-      properties:
-        size:
-          type: integer
-          example: 10
-        unit:
-          type: string
-          default: GB
-          enum:
-            - KB
-            - MB
-            - GB
-    Field:
-      type: object
-      required:
-        - mandatory
-        - name
-      properties:
-        mandatory:
-          type: boolean
-          example: false
-        name:
-          type: string
-          example: firstName
-    WorkshopRequest:
-      type: object
-      required:
-        - name
-        - description
-        - startDateTime
-        - endDateTime
-        - status
       properties:
         name:
           type: string
           example: Unit Testing
         description:
           type: string
-          example: Workshop sur la mise en place des test unitaires...
+          example: Sample sur la mise en place des test unitaires...
         status:
           type: string
           default: PENDING
@@ -609,67 +441,48 @@ components:
           type: string
           format: date-time
           example: 2017-07-21T17:32:28.000Z
-    UpdatedWorkshopRequest:
+    SampleRequest:
       allOf:
-        - $ref: '#/components/schemas/Audit'
-        - $ref: '#/components/schemas/WorkshopRequest'
-      type: object
-    WorkshopResponse:
-      allOf:
-        - $ref: '#/components/schemas/Audit'
-        - $ref: '#/components/schemas/WorkshopRequest'
+        - $ref: '#/components/schemas/Sample'
       type: object
       required:
-        - participants
-      properties:
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/ParticipantResponse'
-    ParticipantRequest:
+        - name
+        - description
+        - startDateTime
+        - endDateTime
+        - status
+    PatchedSampleRequest:
+      allOf:
+        - $ref: '#/components/schemas/Sample'
       type: object
-      required:
-        - firstname
-        - lastname
-        - role
-      properties:
-        firstname:
-          type: string
-          example: Wisly
-        lastname:
-          type: string
-          example: CLERVILUS
-        role:
-          type: string
-          default: UNKNOWN
-          enum:
-            - DEVELOPER
-            - FUNCTIONAL_ANALYST
-            - ARCHITECT
-            - OTHER
-            - UNKNOWN
-    UpdatedParticipantRequest:
+    UpdatedSampleRequest:
       allOf:
         - $ref: '#/components/schemas/Audit'
-        - $ref: '#/components/schemas/ParticipantRequest'
+        - $ref: '#/components/schemas/SampleRequest'
       type: object
-    ParticipantResponse:
+    SampleResponse:
       allOf:
         - $ref: '#/components/schemas/Audit'
-        - $ref: '#/components/schemas/ParticipantRequest'
+        - $ref: '#/components/schemas/SampleRequest'
       type: object
-    Audit:
+    Identity:
       type: object
       required:
         - uuid
-        - version
-        - createdAt
-        - createdByUser
       properties:
         uuid:
           type: string
           uniqueItems: true
           example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    Audit:
+      allOf:
+        - $ref: '#/components/schemas/Identity'
+      type: object
+      required:
+        - version
+        - createdAt
+        - createdBy
+      properties:
         version:
           type: integer
           example: 0
@@ -681,54 +494,15 @@ components:
           type: string
           format: date-time
           example: 2017-07-21T17:32:28.000Z
-        createdByUser:
+        createdBy:
           type: string
           uniqueItems: true
           example: d815d301-8bae-4dd0-a292-56e0cb7509d6
-        modifiedByUser:
+        modifiedBy:
           type: string
           uniqueItems: true
           example: d815d301-8bae-4dd0-a292-56e0cb7509d6
   responses:
-    500APIError:
-      description: This is an unexpected error occurred.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              statusCode:
-                type: string
-                example: 500
-              message:
-                type: string
-                example: This is an internal server error.
-    400APIError:
-      description: This is a bad request.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              statusCode:
-                type: string
-                example: 400
-              message:
-                type: string
-                example: This is a bad request (Verify requestBody).
-    409APIError:
-      description: An existing item already exists.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              statusCode:
-                type: string
-                example: 409
-              message:
-                type: string
-                example: An existing item already exists.
     200APIMessage:
       description: Operation done successfully.
       content:

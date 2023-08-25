@@ -1,0 +1,58 @@
+$ref: "./common.yml"
+
+Sample:
+  type: object
+  properties:
+    name:
+      type: string
+      example: Unit Testing
+    description:
+      type: string
+      example: Sample sur la mise en place des test unitaires...
+    status:
+      type: string
+      default: PENDING
+      enum:
+        - ENDED
+        - STARTED
+        - CANCELED
+        - PENDING
+    startDateTime:
+      type: string
+      format: date-time
+      example: 2017-07-21T17:32:28.000Z
+    endDateTime:
+      type: string
+      format: date-time
+      example: 2017-07-21T17:32:28.000Z
+
+SampleRequest:
+  allOf:
+    - $ref: "#/Sample"
+  type: object
+  required:
+    - name
+    - description
+    - startDateTime
+    - endDateTime
+    - status
+
+PatchedSampleRequest:
+  allOf:
+    - $ref: "#/Sample"
+  type: object
+
+UpdatedSampleRequest:
+  allOf:
+    - $ref: "#/Audit"
+    - $ref: "#/SampleRequest"
+  type: object
+
+
+SampleResponse:
+  allOf:
+    - $ref: "#/Audit"
+    - $ref: "#/SampleRequest"
+  type: object
+
+
