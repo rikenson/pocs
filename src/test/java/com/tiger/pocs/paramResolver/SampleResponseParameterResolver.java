@@ -26,6 +26,7 @@ public class SampleResponseParameterResolver implements ParameterResolver {
         model.setStatus(SampleResponse.StatusEnum.valueOf(SAMPLE_STATUS.getValue()));
         model.setStartDateTime(SAMPLE_START_DATE_TIME);
         model.setEndDateTime(SAMPLE_END_DATE_TIME);
+        model.setEndDateTime(SAMPLE_END_DATE_TIME);
         return model;
     }
 }

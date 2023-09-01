@@ -20,12 +20,6 @@ post:
         application/json:
           schema:
             $ref: "../../schemas/sample.yml#/SampleResponse"
-    "400":
-      $ref: "../../responses/common.yml#/400APIError"
-    "409":
-      $ref: "../../responses/common.yml#/409APIError"
-    "500":
-      $ref: "../../responses/common.yml#/500APIError"
 
 #___________________________________________________________________________
 #4.Find page of sample
@@ -49,10 +43,3 @@ get:
             type: array
             items:
               $ref: "../../schemas/sample.yml#/SampleResponse"
-
-    "400":
-      $ref: "../../responses/common.yml#/400APIError"
-    "409":
-      $ref: "../../responses/common.yml#/409APIError"
-    "500":
-      $ref: "../../responses/common.yml#/500APIError"

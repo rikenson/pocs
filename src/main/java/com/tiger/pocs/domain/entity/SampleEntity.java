@@ -2,6 +2,8 @@ package com.tiger.pocs.domain.entity;
 
 import com.tiger.pocs.domain.enums.Status;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -15,5 +17,7 @@ public class SampleEntity extends BaseEntity {
     private String description;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+
+    @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
 }

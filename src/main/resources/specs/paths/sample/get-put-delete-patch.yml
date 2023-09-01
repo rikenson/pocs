@@ -13,7 +13,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: "../../schemas/sample.yml#/UpdatedSampleRequest"
+          $ref: "../../schemas/sample.yml#/SampleResponse"
   responses:
     "200":
       description: Found item structure.
@@ -21,12 +21,6 @@ put:
         application/json:
           schema:
             $ref: "../../schemas/sample.yml#/SampleResponse"
-    "400":
-      $ref: "../../responses/common.yml#/400APIError"
-    "409":
-      $ref: "../../responses/common.yml#/409APIError"
-    "500":
-      $ref: "../../responses/common.yml#/500APIError"
 
 # #___________________________________________________________________________
 #3.Delete Sample
@@ -41,12 +35,6 @@ delete:
   responses:
     "200":
       $ref: "../../responses/common.yml#/200APIMessage"
-    "400":
-      $ref: "../../responses/common.yml#/400APIError"
-    "409":
-      $ref: "../../responses/common.yml#/409APIError"
-    "500":
-      $ref: "../../responses/common.yml#/500APIError"
 
 #___________________________________________________________________________
 #3.Update Sample
@@ -65,7 +53,7 @@ patch:
         schema:
           type: array
           items:
-            $ref: "../../schemas/sample.yml#/PatchedSampleRequest"
+            $ref: "../../schemas/sample.yml#/SampleRequest"
   responses:
     "200":
       description: Found item structure.
@@ -73,12 +61,6 @@ patch:
         application/json:
           schema:
             $ref: "../../schemas/sample.yml#/SampleResponse"
-    "400":
-      $ref: "../../responses/common.yml#/400APIError"
-    "409":
-      $ref: "../../responses/common.yml#/409APIError"
-    "500":
-      $ref: "../../responses/common.yml#/500APIError"
 
 
 
@@ -99,9 +81,3 @@ get:
         application/json:
           schema:
             $ref: "../../schemas/sample.yml#/SampleResponse"
-    "400":
-      $ref: "../../responses/common.yml#/400APIError"
-    "409":
-      $ref: "../../responses/common.yml#/409APIError"
-    "500":
-      $ref: "../../responses/common.yml#/500APIError"

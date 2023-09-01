@@ -1,41 +1,46 @@
 $ref: "./sample.yml"
-
-Param:
+ParamRequest:
   type: object
+  required:
+    - name
+    - value
+    - type
   properties:
     name:
       type: string
-      example: /config/pocs/message
+      example: "/config/pocs/message"
     value:
       type: string
-      example: Integration SSM Parameter Service Spring Boot
+      example: "Integration SSM Parameter Service Spring Boot"
     type:
       type: string
       example: String
     version:
       type: integer
       example: 1
-    lastModifiedDate:
-      type: string
-      format: date-time
-      example: 2017-07-21T17:32:28.000Z
-
-ParamRequest:
-  allOf:
-    - $ref: "#/Param"
-  type: object
-  required:
-    - name
-    - value
-    - type
 
 
 ParamResponse:
   allOf:
-    - $ref: "#/Audit"
     - $ref: "#/ParamRequest"
   type: object
   properties:
+    id:
+      type: string
+      format: uuid
+      example: ""
+    name:
+      type: string
+      example: "/config/pocs/message"
+    value:
+      type: string
+      example: "Integration SSM Parameter Service Spring Boot"
+    type:
+      type: string
+      example: String
+    version:
+      type: integer
+      example: 1
     lastModifiedDate:
       type: string
       format: date-time

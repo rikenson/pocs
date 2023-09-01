@@ -40,6 +40,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SampleResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
     get:
       tags:
         - sample-endpoints
@@ -57,15 +63,22 @@ paths:
           content:
             application/json:
               schema:
+                type: array
                 items:
-                  $ref: "#/components/schemas/SampleResponse"
+                  $ref: '#/components/schemas/SampleResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
   '/samples/{id}':
     put:
       tags:
         - sample-endpoints
       summary: Update a specific sample by id.
       operationId: updateSample
-      security: [ ]
+      security: []
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -73,7 +86,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdatedSampleRequest'
+              allOf:
+                - $ref: '#/components/schemas/SampleResponse'
+              type: object
       responses:
         '200':
           description: Found item structure.
@@ -81,6 +96,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SampleResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
     delete:
       tags:
         - sample-endpoints
@@ -92,12 +113,18 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200APIMessage'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
     patch:
       tags:
         - sample-endpoints
       summary: patch to sample by id.
       operationId: patchSample
-      security: [ ]
+      security: []
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -105,14 +132,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedSampleRequest'
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Sample'
+                type: object
       responses:
         '200':
           description: Found item structure.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SampleResponse'
+                $ref: '#/paths/~1samples/post/responses/201/content/application~1json/schema'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
     get:
       tags:
         - sample-endpoints
@@ -127,7 +164,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SampleResponse'
+                $ref: '#/paths/~1samples/post/responses/201/content/application~1json/schema'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
   /graph-samples:
     post:
       tags:
@@ -149,6 +192,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SampleResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
     get:
       tags:
         - graph-sample-endpoints
@@ -166,15 +215,22 @@ paths:
           content:
             application/json:
               schema:
+                type: array
                 items:
                   $ref: '#/components/schemas/SampleResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
   '/graph-samples/{id}':
     put:
       tags:
         - graph-sample-endpoints
       summary: Update a specific sample by id.
       operationId: updateGraphSample
-      security: [ ]
+      security: []
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -190,6 +246,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SampleResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
     delete:
       tags:
         - graph-sample-endpoints
@@ -201,12 +263,18 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200APIMessage'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
     patch:
       tags:
         - graph-sample-endpoints
       summary: patch to sample by id.
       operationId: patchGraphSample
-      security: [ ]
+      security: []
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/id'
@@ -214,9 +282,7 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/PatchedSampleRequest'
+              $ref: '#/components/schemas/Sample'
       responses:
         '200':
           description: Found item structure.
@@ -224,6 +290,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SampleResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
     get:
       tags:
         - graph-sample-endpoints
@@ -239,6 +311,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SampleResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
   /aws-parameters:
     post:
       tags:
@@ -260,12 +338,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParamResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
   '/aws-parameters/{key}':
     get:
       tags:
         - aws-params-endpoints
       summary: Fetch a specific sample.
-      operationId: getParamByKey
+      operationId: searchParamByKey
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/key'
@@ -276,12 +360,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParamResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
   /aws-parameters/path:
     get:
       tags:
         - aws-params-endpoints
       summary: Fetch a specific sample.
-      operationId: getParamByPath
+      operationId: searchParamByPath
       parameters:
         - $ref: '#/components/parameters/token'
         - $ref: '#/components/parameters/path'
@@ -294,6 +384,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ParamResponse'
+        '400':
+          $ref: '#/components/responses/400APIError'
+        '409':
+          $ref: '#/components/responses/409APIError'
+        '500':
+          $ref: '#/components/responses/500APIError'
 components:
   securitySchemes:
     implicit:
@@ -352,7 +448,6 @@ components:
       required: true
       schema:
         type: string
-        format: uuid
         example: d815d301-8bae-4dd0-a292-56e0cb7509d6
     token:
       in: header
@@ -408,7 +503,6 @@ components:
         - type
     ParamResponse:
       allOf:
-        - $ref: '#/components/schemas/Audit'
         - $ref: '#/components/schemas/ParamRequest'
       type: object
       properties:
@@ -451,38 +545,25 @@ components:
         - startDateTime
         - endDateTime
         - status
-    PatchedSampleRequest:
-      allOf:
-        - $ref: '#/components/schemas/Sample'
-      type: object
-    UpdatedSampleRequest:
-      allOf:
-        - $ref: '#/components/schemas/Audit'
-        - $ref: '#/components/schemas/SampleRequest'
-      type: object
     SampleResponse:
       allOf:
-        - $ref: '#/components/schemas/Audit'
         - $ref: '#/components/schemas/SampleRequest'
-      type: object
-    Identity:
       type: object
       required:
         - uuid
+        - createdByUser
+        - modifiedByUser
+        - createdAt
+        - name
+        - description
+        - startDateTime
+        - endDateTime
+        - status
       properties:
         uuid:
           type: string
           uniqueItems: true
           example: d815d301-8bae-4dd0-a292-56e0cb7509d6
-    Audit:
-      allOf:
-        - $ref: '#/components/schemas/Identity'
-      type: object
-      required:
-        - version
-        - createdAt
-        - createdBy
-      properties:
         version:
           type: integer
           example: 0
@@ -494,15 +575,62 @@ components:
           type: string
           format: date-time
           example: 2017-07-21T17:32:28.000Z
-        createdBy:
+        createdByUser:
           type: string
           uniqueItems: true
           example: d815d301-8bae-4dd0-a292-56e0cb7509d6
-        modifiedBy:
+        modifiedByUser:
           type: string
           uniqueItems: true
           example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    PatchedSampleRequest:
+      allOf:
+        - $ref: '#/components/schemas/Sample'
+      type: object
+    UpdatedSampleRequest:
+      allOf:
+        - $ref: '#/components/schemas/SampleResponse'
+      type: object
   responses:
+    500APIError:
+      description: This is an unexpected error occurred.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: 500
+              message:
+                type: string
+                example: This is an internal server error.
+    400APIError:
+      description: This is a bad request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: 400
+              message:
+                type: string
+                example: This is a bad request (Verify requestBody).
+    409APIError:
+      description: An existing item already exists.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: 409
+              message:
+                type: string
+                example: An existing item already exists.
     200APIMessage:
       description: Operation done successfully.
       content:

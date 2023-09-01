@@ -15,8 +15,6 @@ public class Constants {
     public static final UpdatedSampleRequest.StatusEnum UPDATED_SAMPLE_STATUS = UpdatedSampleRequest.StatusEnum.PENDING;
 
 
-    public static final String PARTICIPANT_FIRST_NAME = "Wisly";
-    public static final String PARTICIPANT_LAST_NAME = "Clervilus";
 
     public static final LocalDateTime SAMPLE_START_DATE_TIME = LocalDateTime.parse("2023-06-08T19:53:14.263399");
     public static final LocalDateTime SAMPLE_END_DATE_TIME = LocalDateTime.parse("2023-06-08T19:53:14.263399");
@@ -24,6 +22,5 @@ public class Constants {
     public static final LocalDateTime UPDATED_DATE_TIME = LocalDateTime.parse("2023-06-08T19:53:14.263399");
     public static final String CREATE_BY_USER = "Anonymous";
     public static final String MODIFIED_BY_USER = "Anonymous";
-    public static final int VERSION = 0;
 
 }

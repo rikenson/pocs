@@ -1,34 +1,4 @@
-$ref: "./common.yml"
-
-Sample:
-  type: object
-  properties:
-    name:
-      type: string
-      example: Unit Testing
-    description:
-      type: string
-      example: Sample sur la mise en place des test unitaires...
-    status:
-      type: string
-      default: PENDING
-      enum:
-        - ENDED
-        - STARTED
-        - CANCELED
-        - PENDING
-    startDateTime:
-      type: string
-      format: date-time
-      example: 2017-07-21T17:32:28.000Z
-    endDateTime:
-      type: string
-      format: date-time
-      example: 2017-07-21T17:32:28.000Z
-
 SampleRequest:
-  allOf:
-    - $ref: "#/Sample"
   type: object
   required:
     - name
@@ -36,23 +6,85 @@ SampleRequest:
     - startDateTime
     - endDateTime
     - status
-
-PatchedSampleRequest:
-  allOf:
-    - $ref: "#/Sample"
-  type: object
-
-UpdatedSampleRequest:
-  allOf:
-    - $ref: "#/Audit"
-    - $ref: "#/SampleRequest"
-  type: object
-
+  properties:
+    name:
+      type: string
+      example: "Unit Testing"
+    description:
+      type: string
+      example: "Sample sur la mise en place des test unitaires..."
+    status:
+      type: string
+      default: PENDING
+      enum: [ ENDED, STARTED, CANCELED, PENDING ]
+    startDateTime:
+      type: string
+      format: date-time
+      example: "2017-07-21T17:32:28.000Z"
+    endDateTime:
+      type: string
+      format: date-time
+      example: "2017-07-21T17:32:28.000Z"
 
 SampleResponse:
   allOf:
-    - $ref: "#/Audit"
     - $ref: "#/SampleRequest"
   type: object
+  required:
+    - uuid
+    - createdByUser
+    - modifiedByUser
+    - createdAt
+    - name
+    - description
+    - startDateTime
+    - endDateTime
+    - status
+  properties:
+    uuid:
+      type: string
+      uniqueItems: true
+      example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    name:
+      type: string
+      example: "Unit Testing"
+    description:
+      type: string
+      example: "Sample sur la mise en place des test unitaires..."
+    status:
+      type: string
+      default: PENDING
+      enum: [ ENDED, STARTED, CANCELED, PENDING ]
+    startDateTime:
+      type: string
+      format: date-time
+      example: "2017-07-21T17:32:28.000Z"
+    endDateTime:
+      type: string
+      format: date-time
+      example: "2017-07-21T17:32:28.000Z"
+    version:
+      type: integer
+      example: 0
+    createdAt:
+      type: string
+      format: date-time
+      example: 2017-07-21T17:32:28.000Z
+    updatedAt:
+      type: string
+      format: date-time
+      example: 2017-07-21T17:32:28.000Z
+    createdByUser:
+      type: string
+      uniqueItems: true
+      example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    modifiedByUser:
+      type: string
+      uniqueItems: true
+      example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+
+
+
+
 
 

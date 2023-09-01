@@ -10,7 +10,6 @@ import static com.tiger.pocs.utils.Constants.*;
 
 
 public class UpdatedSampleRequestParameterResolver implements ParameterResolver {
-    @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
             throws ParameterResolutionException {
         return parameterContext.getParameter().getType() == UpdatedSampleRequest.class;
@@ -21,7 +20,7 @@ public class UpdatedSampleRequestParameterResolver implements ParameterResolver 
             throws ParameterResolutionException {
 
         var model = new UpdatedSampleRequest();
-        model.setUuid(UUID_VALUE.toString());
+//        model.setUuid(UUID_VALUE.toString());
         model.setName(SAMPLE_NAME);
         model.setDescription(SAMPLE_DESCRIPTION);
         model.setStatus(UPDATED_SAMPLE_STATUS);

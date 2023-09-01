@@ -20,10 +20,4 @@ post:
         application/json:
           schema:
             $ref: "../../schemas/params.yml#/ParamResponse"
-    "400":
-      $ref: "../../responses/common.yml#/400APIError"
-    "409":
-      $ref: "../../responses/common.yml#/409APIError"
-    "500":
-      $ref: "../../responses/common.yml#/500APIError"
 
