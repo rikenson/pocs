@@ -11,11 +11,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @SuperBuilder
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -24,9 +24,6 @@ public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
-
-    @Version
-    private Integer version;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -39,4 +36,12 @@ public abstract class BaseEntity {
 
 
     private String modifiedBy;
+
+    protected BaseEntity() {
+        this.uuid = UUID.randomUUID().toString();
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = null;
+        this.modifiedBy = "Anonymous";
+        this.createdBy = "Anonymous";
+    }
 }

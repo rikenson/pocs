@@ -1,27 +1,24 @@
 package com.tiger.pocs.handler;
 
-import com.tiger.pocs.domain.enums.Status;
-import com.tiger.pocs.domain.filter.SampleFilter;
 import com.tiger.pocs.payload.SampleRequest;
 import com.tiger.pocs.payload.SampleResponse;
-import com.tiger.pocs.service.sample.rdbms.SampleService;
+import com.tiger.pocs.service.sample.graph.SampleGraphService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
 @Controller
-@RequestMapping("/samples")
-public class SampleHandler {
+@RequestMapping("/graph/samples")
+public class SampleGraphHandler {
 
-    private final SampleService service;
+    private final SampleGraphService service;
 
-    public SampleHandler(SampleService service) {
+    public SampleGraphHandler(SampleGraphService service) {
         this.service = service;
     }
 
@@ -47,22 +44,11 @@ public class SampleHandler {
         return ResponseEntity.ok(service.retrieveAll());
     }
 
-    @GetMapping("/by-filter")
+    @GetMapping("/by-key-value")
     public ResponseEntity<List<SampleResponse>> sampleRetrieveByFilter(
-            @RequestParam("name") String name,
-            @RequestParam("status") String status,
-            @RequestParam("startDateTime") LocalDateTime startDateTime,
-            @RequestParam("endDateTime") LocalDateTime endDateTime,
-            @RequestParam("preferredField") String preferredField) {
-        SampleFilter filter = SampleFilter
-                .builder()
-                .name(name)
-                .status(Status.valueOf(status))
-                .startDateTime(startDateTime)
-                .endDateTime(endDateTime)
-                .preferredField(preferredField)
-                .build();
-        return ResponseEntity.ok(service.retrieveByCriteria(filter));
+            @RequestParam("key") String key,
+            @RequestParam("value") String value) {
+        return ResponseEntity.ok(service.retrieveByKeyValue(key, value));
     }
 
     @DeleteMapping("{uuid}")

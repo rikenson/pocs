@@ -12,7 +12,7 @@ public class Constants {
     public static final String UPDATED_SAMPLE_NAME = "Unit Testing Essential Updated";
     public static final String SAMPLE_DESCRIPTION = "Learn unit testing with JUnit, AssertJ, Mockito, Pitest";
     public static final SampleRequest.StatusEnum SAMPLE_STATUS = SampleRequest.StatusEnum.PENDING;
-    public static final UpdatedSampleRequest.StatusEnum UPDATED_SAMPLE_STATUS = UpdatedSampleRequest.StatusEnum.PENDING;
+    public static final SampleResponse.StatusEnum UPDATED_SAMPLE_STATUS = SampleResponse.StatusEnum.PENDING;
 
 
 

@@ -5,8 +5,8 @@ import com.tiger.pocs.paramResolver.SampleResponseParameterResolver;
 import com.tiger.pocs.paramResolver.UpdatedSampleRequestParameterResolver;
 import com.tiger.pocs.payload.SampleRequest;
 import com.tiger.pocs.payload.SampleResponse;
-import com.tiger.pocs.payload.UpdatedSampleRequest;
-import com.tiger.pocs.service.sample.SampleService;
+import com.tiger.pocs.payload.SampleResponse;
+import com.tiger.pocs.service.sample.rdbms.SampleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
-import java.util.UUID;
 
 import static com.tiger.pocs.utils.Constants.UPDATED_SAMPLE_NAME;
 import static com.tiger.pocs.utils.Constants.UUID_VALUE;
@@ -64,7 +63,7 @@ class SampleEntityHandlerTest {
 
     @Test
     @DisplayName("Update existing sample succeeded -> Status: 200")
-    void put_exited_sample_succeed_200(UpdatedSampleRequest request, SampleResponse response) {
+    void put_exited_sample_succeed_200(SampleResponse request, SampleResponse response) {
 
         request.setName(UPDATED_SAMPLE_NAME);
         response.setName(UPDATED_SAMPLE_NAME);

@@ -1,5 +1,6 @@
 SampleRequest:
   type: object
+  title: SampleRequest
   required:
     - name
     - description
@@ -27,9 +28,8 @@ SampleRequest:
       example: "2017-07-21T17:32:28.000Z"
 
 SampleResponse:
-  allOf:
-    - $ref: "#/SampleRequest"
   type: object
+  title: SampleRequest
   required:
     - uuid
     - createdByUser
@@ -74,11 +74,11 @@ SampleResponse:
       type: string
       format: date-time
       example: 2017-07-21T17:32:28.000Z
-    createdByUser:
+    createdBy:
       type: string
       uniqueItems: true
       example: d815d301-8bae-4dd0-a292-56e0cb7509d6
-    modifiedByUser:
+    modifiedBy:
       type: string
       uniqueItems: true
       example: d815d301-8bae-4dd0-a292-56e0cb7509d6

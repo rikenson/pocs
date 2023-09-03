@@ -1,8 +1,8 @@
-package com.tiger.pocs.service.sample;
+package com.tiger.pocs.service.sample.rdbms;
 
 
-import com.tiger.pocs.payload.PatchedSampleRequest;
-import com.tiger.pocs.payload.UpdatedSampleRequest;
+import com.tiger.pocs.payload.SampleRequest;
+import com.tiger.pocs.payload.SampleResponse;
 import com.tiger.pocs.payload.SampleRequest;
 import com.tiger.pocs.payload.SampleResponse;
 import com.tiger.pocs.domain.filter.SampleFilter;
@@ -14,8 +14,8 @@ public interface SampleService {
 
     SampleResponse add(SampleRequest request);
 
-    SampleResponse edit(UpdatedSampleRequest request, String uuid);
-    SampleResponse partialEdit(PatchedSampleRequest request, String uuid);
+    SampleResponse edit(SampleResponse request, String uuid);
+    SampleResponse partialEdit(SampleRequest request, String uuid);
 
     SampleResponse retrieve(String uuid);
 

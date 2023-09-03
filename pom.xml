@@ -123,6 +123,11 @@
             <artifactId>gson</artifactId>
             <version>2.10.1</version>
         </dependency>
+        <dependency>
+            <groupId>io.goodforgod</groupId>
+            <artifactId>gson-configuration</artifactId>
+            <version>2.0.0</version>
+        </dependency>
 
         <!-- Thinker-pop gremlin-->
         <dependency>

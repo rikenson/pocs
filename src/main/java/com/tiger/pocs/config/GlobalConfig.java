@@ -1,14 +1,10 @@
 package com.tiger.pocs.config;
 
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.tiger.pocs.utils.LocalDateTypeAdapter;
+import io.goodforgod.gson.configuration.GsonConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-
-import java.time.LocalDate;
 
 @Configuration
 public class GlobalConfig {
@@ -19,8 +15,6 @@ public class GlobalConfig {
     @Primary
     @Bean("customGson")
     public Gson customGson() {
-        return new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
-                .create();
+        return new GsonConfiguration().builder().create();
     }
 }

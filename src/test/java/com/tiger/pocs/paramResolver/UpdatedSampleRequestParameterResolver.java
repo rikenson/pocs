@@ -1,6 +1,6 @@
 package com.tiger.pocs.paramResolver;
 
-import com.tiger.pocs.payload.UpdatedSampleRequest;
+import com.tiger.pocs.payload.SampleResponse;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
@@ -12,14 +12,14 @@ import static com.tiger.pocs.utils.Constants.*;
 public class UpdatedSampleRequestParameterResolver implements ParameterResolver {
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
             throws ParameterResolutionException {
-        return parameterContext.getParameter().getType() == UpdatedSampleRequest.class;
+        return parameterContext.getParameter().getType() == SampleResponse.class;
     }
 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
             throws ParameterResolutionException {
 
-        var model = new UpdatedSampleRequest();
+        var model = new SampleResponse();
 //        model.setUuid(UUID_VALUE.toString());
         model.setName(SAMPLE_NAME);
         model.setDescription(SAMPLE_DESCRIPTION);

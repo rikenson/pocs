@@ -1,29 +1,30 @@
 package com.tiger.pocs.mapper;
 
 import com.tiger.pocs.domain.entity.SampleEntity;
-import com.tiger.pocs.payload.*;
+import com.tiger.pocs.payload.ParamResponse;
+import com.tiger.pocs.payload.SampleRequest;
+import com.tiger.pocs.payload.SampleResponse;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import software.amazon.awssdk.services.ssm.model.GetParameterResponse;
 import software.amazon.awssdk.services.ssm.model.Parameter;
 
-import static com.tiger.pocs.utils.FixedValues.DEFAULT_CREATE_BY_USER;
 
-
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public interface CustomMapper {
-    @Mapping(target = "createdBy", constant = DEFAULT_CREATE_BY_USER)
+
+    //    @Mapping(target = "uuid", defaultExpression = "java(UUID.randomUUID
     SampleEntity requestToSampleEntity(SampleRequest request);
 
     SampleResponse entityToSampleResponse(SampleEntity entity);
 
-    SampleEntity updatedRequestToSampleEntity(UpdatedSampleRequest request);
+    SampleEntity updatedRequestToSampleEntity(SampleResponse request);
 
     ParamResponse awsResponseToSampleResponse(GetParameterResponse response);
 
     ParamResponse awsPathResponseToSampleResponse(Parameter response);
 
-    void mapProps(@MappingTarget SampleEntity entity, PatchedSampleRequest request);
+    void mapProps(@MappingTarget SampleEntity entity, SampleRequest request);
 
 }

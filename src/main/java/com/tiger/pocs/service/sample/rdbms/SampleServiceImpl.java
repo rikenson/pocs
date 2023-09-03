@@ -1,12 +1,11 @@
-package com.tiger.pocs.service.sample;
+package com.tiger.pocs.service.sample.rdbms;
 
 import com.tiger.pocs.domain.filter.SampleFilter;
 import com.tiger.pocs.exception.NotFoundException;
 import com.tiger.pocs.mapper.CustomMapper;
-import com.tiger.pocs.payload.PatchedSampleRequest;
+import com.tiger.pocs.payload.SampleRequest;
 import com.tiger.pocs.payload.SampleRequest;
 import com.tiger.pocs.payload.SampleResponse;
-import com.tiger.pocs.payload.UpdatedSampleRequest;
 import com.tiger.pocs.repository.rds.SampleRepository;
 import com.tiger.pocs.service.criteria.SampleSpecification;
 import org.springframework.stereotype.Service;
@@ -28,12 +27,11 @@ public class SampleServiceImpl implements SampleService {
 
     @Override
     public SampleResponse add(SampleRequest request) {
-        return converter
-                .entityToSampleResponse(repository.save(converter.requestToSampleEntity(request)));
+        return converter.entityToSampleResponse(repository.save(converter.requestToSampleEntity(request)));
     }
 
     @Override
-    public SampleResponse edit(UpdatedSampleRequest request, String uuid) {
+    public SampleResponse edit(SampleResponse request, String uuid) {
 
         if (!repository.existsById(uuid))
             throw new NotFoundException(String.format(NOT_FOUND_EXCEPTION_MSG, uuid));
@@ -43,7 +41,7 @@ public class SampleServiceImpl implements SampleService {
     }
 
     @Override
-    public SampleResponse partialEdit(PatchedSampleRequest request, String uuid) {
+    public SampleResponse partialEdit(SampleRequest request, String uuid) {
 
         var toBeUpdated = repository
                 .findById(uuid)
