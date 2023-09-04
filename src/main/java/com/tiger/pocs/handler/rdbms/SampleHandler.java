@@ -1,4 +1,4 @@
-package com.tiger.pocs.handler;
+package com.tiger.pocs.handler.rdbms;
 
 import com.tiger.pocs.domain.enums.Status;
 import com.tiger.pocs.domain.filter.SampleFilter;

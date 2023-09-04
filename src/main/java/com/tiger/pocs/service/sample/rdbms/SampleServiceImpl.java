@@ -2,11 +2,10 @@ package com.tiger.pocs.service.sample.rdbms;
 
 import com.tiger.pocs.domain.filter.SampleFilter;
 import com.tiger.pocs.exception.NotFoundException;
-import com.tiger.pocs.mapper.CustomMapper;
-import com.tiger.pocs.payload.SampleRequest;
+import com.tiger.pocs.mapper.rdbms.CustomMapper;
 import com.tiger.pocs.payload.SampleRequest;
 import com.tiger.pocs.payload.SampleResponse;
-import com.tiger.pocs.repository.rds.SampleRepository;
+import com.tiger.pocs.repository.rdbms.SampleRepository;
 import com.tiger.pocs.service.criteria.SampleSpecification;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,10 @@
 package com.tiger.pocs.handler;
 
+import com.tiger.pocs.handler.rdbms.SampleHandler;
 import com.tiger.pocs.paramResolver.SampleRequestParameterResolver;
 import com.tiger.pocs.paramResolver.SampleResponseParameterResolver;
 import com.tiger.pocs.paramResolver.UpdatedSampleRequestParameterResolver;
 import com.tiger.pocs.payload.SampleRequest;
-import com.tiger.pocs.payload.SampleResponse;
 import com.tiger.pocs.payload.SampleResponse;
 import com.tiger.pocs.service.sample.rdbms.SampleService;
 import org.junit.jupiter.api.BeforeEach;

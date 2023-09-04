@@ -1,4 +1,4 @@
-package com.tiger.pocs.domain.entity;
+package com.tiger.pocs.domain.entity.rdbms;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

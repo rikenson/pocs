@@ -27,6 +27,64 @@ SampleRequest:
       format: date-time
       example: "2017-07-21T17:32:28.000Z"
 
+LinkedRequest:
+  type: object
+  title: LinkedRequest
+  required:
+    - linkLabel
+    - sampleEdge
+    - sVertex
+    - eVertex
+  properties:
+    linkLabel:
+      type: string
+      example: "are_brothers"
+    sampleEdge:
+      $ref: "#/SampleEdge"
+    sVertex:
+      $ref: "#/SampleRequest"
+    eVertex:
+      $ref: "#/SampleRequest"
+
+
+SampleEdge:
+  type: object
+  title: SampleEdge
+  required:
+    - similitudeDegree
+  properties:
+    similitudeDegree:
+      type: integer
+      format: int64
+      example: "similitudeDegree"
+
+
+PatchSampleRequest:
+  type: object
+  title: SampleRequest
+  properties:
+    name:
+      type: string
+      example: Unit Testing
+    description:
+      type: string
+      example: Sample sur la mise en place des test unitaires...
+    status:
+      type: string
+      default: PENDING
+      enum:
+        - ENDED
+        - STARTED
+        - CANCELED
+        - PENDING
+    startDateTime:
+      type: string
+      format: date-time
+      example: '2017-07-21T17:32:28.000Z'
+    endDateTime:
+      type: string
+      format: date-time
+      example: '2017-07-21T17:32:28.000Z'
 SampleResponse:
   type: object
   title: SampleRequest
@@ -63,14 +121,11 @@ SampleResponse:
       type: string
       format: date-time
       example: "2017-07-21T17:32:28.000Z"
-    version:
-      type: integer
-      example: 0
     createdAt:
       type: string
       format: date-time
       example: 2017-07-21T17:32:28.000Z
-    updatedAt:
+    modifiedAt:
       type: string
       format: date-time
       example: 2017-07-21T17:32:28.000Z

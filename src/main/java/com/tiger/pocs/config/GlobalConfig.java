@@ -15,6 +15,7 @@ public class GlobalConfig {
     @Primary
     @Bean("customGson")
     public Gson customGson() {
-        return new GsonConfiguration().builder().create();
+        return new GsonConfiguration()
+                .builder().create();
     }
 }

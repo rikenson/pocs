@@ -1,6 +1,8 @@
 package com.tiger.pocs.mapper;
 
-import com.tiger.pocs.domain.entity.SampleEntity;
+import com.tiger.pocs.domain.entity.rdbms.SampleEntity;
+import com.tiger.pocs.mapper.rdbms.CustomMapper;
+import com.tiger.pocs.mapper.rdbms.CustomMapperImpl;
 import com.tiger.pocs.paramResolver.SampleEntityParameterResolver;
 import com.tiger.pocs.paramResolver.SampleRequestParameterResolver;
 import com.tiger.pocs.paramResolver.SampleResponseParameterResolver;

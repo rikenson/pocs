@@ -1,9 +1,9 @@
 package com.tiger.pocs.repository;
 
-import com.tiger.pocs.domain.entity.SampleEntity;
+import com.tiger.pocs.domain.entity.rdbms.SampleEntity;
 import com.tiger.pocs.paramResolver.SampleEntityParameterResolver;
 import com.tiger.pocs.paramResolver.SampleResponseParameterResolver;
-import com.tiger.pocs.repository.rds.SampleRepository;
+import com.tiger.pocs.repository.rdbms.SampleRepository;
 import com.tiger.pocs.utils.CommonPostgresqlContainer;
 import com.tiger.pocs.utils.FixedValues;
 import org.junit.jupiter.api.AfterAll;

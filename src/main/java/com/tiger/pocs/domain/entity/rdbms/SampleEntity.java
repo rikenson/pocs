@@ -1,4 +1,4 @@
-package com.tiger.pocs.domain.entity;
+package com.tiger.pocs.domain.entity.rdbms;
 
 import com.tiger.pocs.domain.enums.Status;
 import jakarta.persistence.Entity;

@@ -1,12 +1,20 @@
 package com.tiger.pocs.utils;
 
-public class Utills {
+public class Utils {
 
-    public static String getClassNameSuffix(String className) {
+
+    private Utils() {
+    }
+
+    public static String toLabel(String className) {
         if (className.endsWith("Response"))
             return className.replace("Response", "");
         else if (className.endsWith("Request"))
             return className.replace("Request", "");
+        else if (className.endsWith("Edge"))
+            return className.replace("Edge", "");
         return className.replace("Entity", "");
     }
+
+
 }

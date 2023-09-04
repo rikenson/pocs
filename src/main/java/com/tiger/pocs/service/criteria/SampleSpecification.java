@@ -1,6 +1,6 @@
 package com.tiger.pocs.service.criteria;
 
-import com.tiger.pocs.domain.entity.SampleEntity;
+import com.tiger.pocs.domain.entity.rdbms.SampleEntity;
 import com.tiger.pocs.domain.filter.SampleFilter;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

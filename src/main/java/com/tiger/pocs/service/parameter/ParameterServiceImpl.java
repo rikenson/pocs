@@ -1,6 +1,6 @@
 package com.tiger.pocs.service.parameter;
 
-import com.tiger.pocs.mapper.CustomMapper;
+import com.tiger.pocs.mapper.rdbms.CustomMapper;
 import com.tiger.pocs.payload.ParamRequest;
 import com.tiger.pocs.payload.ParamResponse;
 import org.springframework.stereotype.Service;

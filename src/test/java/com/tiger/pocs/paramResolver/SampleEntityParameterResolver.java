@@ -1,6 +1,6 @@
 package com.tiger.pocs.paramResolver;
 
-import com.tiger.pocs.domain.entity.SampleEntity;
+import com.tiger.pocs.domain.entity.rdbms.SampleEntity;
 import com.tiger.pocs.domain.enums.Status;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;

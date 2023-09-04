@@ -1,6 +1,6 @@
-package com.tiger.pocs.mapper;
+package com.tiger.pocs.mapper.rdbms;
 
-import com.tiger.pocs.domain.entity.SampleEntity;
+import com.tiger.pocs.domain.entity.rdbms.SampleEntity;
 import com.tiger.pocs.payload.ParamResponse;
 import com.tiger.pocs.payload.SampleRequest;
 import com.tiger.pocs.payload.SampleResponse;
