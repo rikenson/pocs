@@ -202,8 +202,11 @@ public class GremlinProxy {
     }
 
     public Object executeTraversal(@NotNull final String traversal) {
-        //TODO Implements the method to execute subgraph traversal
         return traversal;
+    }
+
+    public Object executeTraversalByLabel(@NotNull final String traversal, @NotNull final String label) {
+        return traversal + label;
     }
 
 
