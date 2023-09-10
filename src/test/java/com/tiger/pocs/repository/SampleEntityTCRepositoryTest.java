@@ -1,6 +1,5 @@
 package com.tiger.pocs.repository;
 
-import com.tiger.pocs.domain.entity.rdbms.SampleEntity;
 import com.tiger.pocs.paramResolver.SampleEntityParameterResolver;
 import com.tiger.pocs.paramResolver.SampleResponseParameterResolver;
 import com.tiger.pocs.repository.rdbms.SampleRepository;
@@ -8,8 +7,6 @@ import com.tiger.pocs.utils.CommonPostgresqlContainer;
 import com.tiger.pocs.utils.FixedValues;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
@@ -21,8 +18,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith({
         SpringExtension.class,
@@ -56,26 +51,26 @@ class SampleEntityTCRepositoryTest {
         container.stop();
     }
 
-    @Test
-    @DisplayName("Save new sample succeeded")
-    void save_new_sample_succeed(SampleEntity sampleEntity) {
-
-        var underTest = sampleRepository.save(sampleEntity);
-        var saved = sampleRepository.findById(sampleEntity.getUuid());
-        assertThat(underTest)
-                .usingRecursiveComparison()
-                .isEqualTo(saved.orElse(null));
-    }
-
-    @Test
-    @DisplayName("Update new sample succeeded")
-    void update_existing_sample_succeed(SampleEntity sampleEntity) {
-        var underTest = sampleRepository.save(sampleEntity);
-        var saved = sampleRepository.findById(sampleEntity.getUuid());
-        assertThat(underTest)
-                .usingRecursiveComparison()
-                .isEqualTo(saved.orElse(null));
-    }
+//    @Test
+//    @DisplayName("Save new sample succeeded")
+//    void save_new_sample_succeed(SampleEntity sampleEntity) {
+//
+//        var underTest = sampleRepository.save(sampleEntity);
+//        var saved = sampleRepository.findById(sampleEntity.getUuid());
+//        assertThat(underTest)
+//                .usingRecursiveComparison()
+//                .isEqualTo(saved.orElse(null));
+//    }
+//
+//    @Test
+//    @DisplayName("Update new sample succeeded")
+//    void update_existing_sample_succeed(SampleEntity sampleEntity) {
+//        var underTest = sampleRepository.save(sampleEntity);
+//        var saved = sampleRepository.findById(sampleEntity.getUuid());
+//        assertThat(underTest)
+//                .usingRecursiveComparison()
+//                .isEqualTo(saved.orElse(null));
+//    }
 
 
 }

@@ -8,28 +8,46 @@
         <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.tiger</groupId>
     <artifactId>pocs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>pocs</name>
     <description>Proof of Concepts</description>
+
+    <profiles>
+        <profile>
+            <id>test</id>
+        </profile>
+        <profile>
+            <id>local</id>
+        </profile>
+    </profiles>
+
+
     <properties>
         <java.version>17</java.version>
         <default.package>com.tiger.pocs</default.package>
-        <openapi.generator.maven.plugin>6.3.0</openapi.generator.maven.plugin>
+        <openapi.generator.maven.plugin>7.0.0</openapi.generator.maven.plugin>
         <maven.plugin.validation>verbose</maven.plugin.validation>
         <jackson.databind>2.15.0</jackson.databind>
         <jackson.databind.nullable>0.2.4</jackson.databind.nullable>
         <swagger.annotations>2.2.11</swagger.annotations>
         <jacoco.maven.plugin>0.8.10</jacoco.maven.plugin>
-        <jacoco.coverage.ratio>0.00</jacoco.coverage.ratio>
+        <jacoco.coverage.ratio>0</jacoco.coverage.ratio>
         <spring-cloud.secret.version>2.2.6.RELEASE</spring-cloud.secret.version>
 
 
         <mockito.all>2.0.2-beta</mockito.all>
         <testcontainers.postgres.version>1.17.3</testcontainers.postgres.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+        <gson.version>2.10.1</gson.version>
+        <gson-configuration.version>2.0.0</gson-configuration.version>
+        <gremlin-driver.version>3.6.4</gremlin-driver.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
+        <awssdk.version>2.20.109</awssdk.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -45,7 +63,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -55,6 +72,55 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.databind}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson.databind.nullable}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.annotations}</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>ssm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.goodforgod</groupId>
+            <artifactId>gson-configuration</artifactId>
+            <version>${gson-configuration.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tinkerpop</groupId>
+            <artifactId>gremlin-driver</artifactId>
+            <version>${gremlin-driver.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
         </dependency>
         <!-- Testing dependencies-->
         <dependency>
@@ -91,71 +157,19 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-
-        <!-- Jackson data binder for openapi generator-->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.databind}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>jackson-databind-nullable</artifactId>
-            <version>${jackson.databind.nullable}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger.annotations}</version>
-        </dependency>
-
-        <!--  Amazon SDK-->
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>ssm</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.goodforgod</groupId>
-            <artifactId>gson-configuration</artifactId>
-            <version>2.0.0</version>
-        </dependency>
-
-        <!-- Thinker-pop gremlin-->
-        <dependency>
-            <groupId>org.apache.tinkerpop</groupId>
-            <artifactId>gremlin-driver</artifactId>
-            <version>3.6.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jnosql.mapping</groupId>
-            <artifactId>jnosql-mapping-graph</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${org.mapstruct.version}</version>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
-            <!--  Amazon SDK-->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
+            </dependency>
             <dependency>
                 <groupId>software.amazon.awssdk</groupId>
                 <artifactId>bom</artifactId>
-                <version>2.20.109</version>
+                <version>${awssdk.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -189,6 +203,7 @@
                     </annotationProcessorPaths>
                     <compilerArgs>
                         <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
+                        <arg>-Amapstruct.verbose=true</arg>
                         <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
                     </compilerArgs>
                 </configuration>
@@ -216,6 +231,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <skipValidateSpec>true</skipValidateSpec>
                             <inputSpec>${project.basedir}/src/main/resources/specs/oas3.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <modelPackage>${default.package}.payload</modelPackage>
@@ -229,17 +245,11 @@
                                 <useSpringBoot3>true</useSpringBoot3>
                                 <delegatePattern>true</delegatePattern>
                                 <sortParamsByRequiredFlag>true</sortParamsByRequiredFlag>
-                                <additionalModelTypeAnnotations>
-                                    @lombok.Builder
-                                    @lombok.NoArgsConstructor
-                                    @lombok.AllArgsConstructor
-                                </additionalModelTypeAnnotations>
                             </configOptions>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <!-- Code coverage test plugin-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>

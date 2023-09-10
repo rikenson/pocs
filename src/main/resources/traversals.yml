@@ -1,0 +1,5 @@
+- started.sample:
+    "g.V().has('Sample', 'status',status).as('item')
+    .project('SampleName','SampleDesc')
+    .by(select('item').values('name'))
+    .by(select('item').values('description'))"

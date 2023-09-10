@@ -43,6 +43,13 @@ public class SampleGraphHandler {
         return ResponseEntity.ok(service.retrieveAll());
     }
 
+
+    @GetMapping("/started-samples")
+    public ResponseEntity<List<Object>> started() {
+        return ResponseEntity.ok(service.findStartedSample());
+    }
+
+
     @GetMapping("/by-key-value")
     public ResponseEntity<List<SampleResponse>> sampleRetrieveByFilter(
             @RequestParam("key") String key,

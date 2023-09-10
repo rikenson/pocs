@@ -1,3 +1,13 @@
+jnosql:
+  tinkerpop:
+    host: ws://localhost:8182
+    user: neo4j
+    password: admin123
+  graph:
+    provider: org.eclipse.jnosql.mapping.graph.connections.TinkerpopGraphConfiguration
+
+traversals:
+  filename: traversals.yml
 spring:
   application:
     name: pocs

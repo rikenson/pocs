@@ -16,7 +16,8 @@ import software.amazon.awssdk.services.ssm.SsmClient;
 @Configuration
 @ConfigurationProperties(prefix = "aws.ssm")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class SsmConfig {
+public class
+SsmConfig {
     private String region;
 
     /**
