@@ -145,6 +145,19 @@ public class GremlinProxy {
     }
 
 
+    /**
+     * @param edge             :
+     * @param edgeLabel:
+     * @param sVertex:
+     * @param sVLabel:
+     * @param sVCriteriaKey:
+     * @param sVCriteriaValue:
+     * @param eVertex:
+     * @param eVLabel:
+     * @param eVCriteriaKey:
+     * @param eVCriteriaValue:
+     * @return Object
+     */
     public Object linkVertices(@NotNull final Object edge,
                                @NotNull final String edgeLabel,
                                @NotNull final Object sVertex,
@@ -186,6 +199,11 @@ public class GremlinProxy {
         }
 
         return traversal.coalesce(elementMap()).next();
+    }
+
+    public Object executeTraversal(@NotNull final String traversal) {
+        //TODO Implements the method to execute subgraph traversal
+        return traversal;
     }
 
 
