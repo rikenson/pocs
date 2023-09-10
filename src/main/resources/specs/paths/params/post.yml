@@ -1,0 +1,23 @@
+#___________________________________________________________________________
+#1.Add brand new param
+post:
+  tags:
+    - param-endpoints
+  summary: Register new param.
+  operationId: addParam
+  description: Add a brand new param
+  parameters:
+    - $ref: "../../parameters/common.yml#/token"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/params.yml#/ParamRequest"
+  responses:
+    "201":
+      description: Item created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/params.yml#/ParamResponse"
+

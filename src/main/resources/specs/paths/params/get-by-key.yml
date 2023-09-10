@@ -1,0 +1,17 @@
+#___________________________________________________________________________
+#4.Find aws param by name
+get:
+  tags:
+    - aws-params-endpoints
+  summary: Fetch a specific sample.
+  operationId: searchParamByKey
+  parameters:
+    - $ref: "../../parameters/common.yml#/token"
+    - $ref: "../../parameters/common.yml#/key"
+  responses:
+    "200":
+      description: Found item by id.
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/params.yml#/ParamResponse"

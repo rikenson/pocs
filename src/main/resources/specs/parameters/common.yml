@@ -59,11 +59,20 @@ token:
     type: string
     example: 283jebuiVIVEG&#G#UGFXVVWWVD#h3dndon3j0d1hd119hd&ywyw^YS
 
-participantId:
+key:
   in: path
-  name: participantId
-  description: Current participant ID.
+  name: key
+  description: Current key.
   required: true
   schema:
     type: string
-    example: d815d301-8bae-4dd0-a292-56e0cb7509d8
+    example: key
+
+path:
+  in: query
+  name: path
+  description: Current path.
+  required: true
+  schema:
+    type: string
+    example: path

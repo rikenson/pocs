@@ -1,0 +1,2 @@
+name,description,startDateTime,endDateTime,status,updatedName,updatedDescription,updatedStartDateTime,updatedEndDateTime,updatedStatus,createdAt,modifiedAt,badStatus,badId
+Sample 2,Sample Desc,2017-07-21T17:32:28.000Z,2017-07-21T17:32:28.000Z,STARTED,Sample 2 Updated,Sample Desc Updated,2020-07-21T17:32:28.000Z,2020-07-21T17:32:28.000Z,PENDING,2000-07-21T17:32:28.000Z,2020-07-22T17:32:28.000Z,BAD_STATUS,f7bf7609-9890-4dd2-802f-16e5d67b7992

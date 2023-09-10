@@ -1,0 +1,145 @@
+SampleRequest:
+  type: object
+  title: SampleRequest
+  required:
+    - name
+    - description
+    - startDateTime
+    - endDateTime
+    - status
+  properties:
+    name:
+      type: string
+      example: "Unit Testing"
+    description:
+      type: string
+      example: "Sample sur la mise en place des test unitaires..."
+    status:
+      type: string
+      default: PENDING
+      enum: [ ENDED, STARTED, CANCELED, PENDING ]
+    startDateTime:
+      type: string
+      format: date-time
+      example: "2017-07-21T17:32:28.000Z"
+    endDateTime:
+      type: string
+      format: date-time
+      example: "2017-07-21T17:32:28.000Z"
+
+LinkedRequest:
+  type: object
+  title: LinkedRequest
+  required:
+    - linkLabel
+    - sampleEdge
+    - sVertex
+    - eVertex
+  properties:
+    linkLabel:
+      type: string
+      example: "are_brothers"
+    sampleEdge:
+      $ref: "#/SampleEdge"
+    sVertex:
+      $ref: "#/SampleRequest"
+    eVertex:
+      $ref: "#/SampleRequest"
+
+
+SampleEdge:
+  type: object
+  title: SampleEdge
+  required:
+    - similitudeDegree
+  properties:
+    similitudeDegree:
+      type: integer
+      format: int64
+      example: "similitudeDegree"
+
+
+PatchSampleRequest:
+  type: object
+  title: SampleRequest
+  properties:
+    name:
+      type: string
+      example: Unit Testing
+    description:
+      type: string
+      example: Sample sur la mise en place des test unitaires...
+    status:
+      type: string
+      default: PENDING
+      enum:
+        - ENDED
+        - STARTED
+        - CANCELED
+        - PENDING
+    startDateTime:
+      type: string
+      format: date-time
+      example: '2017-07-21T17:32:28.000Z'
+    endDateTime:
+      type: string
+      format: date-time
+      example: '2017-07-21T17:32:28.000Z'
+SampleResponse:
+  type: object
+  title: SampleRequest
+  required:
+    - uuid
+    - createdByUser
+    - modifiedByUser
+    - createdAt
+    - name
+    - description
+    - startDateTime
+    - endDateTime
+    - status
+  properties:
+    uuid:
+      type: string
+      uniqueItems: true
+      example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    name:
+      type: string
+      example: "Unit Testing"
+    description:
+      type: string
+      example: "Sample sur la mise en place des test unitaires..."
+    status:
+      type: string
+      default: PENDING
+      enum: [ ENDED, STARTED, CANCELED, PENDING ]
+    startDateTime:
+      type: string
+      format: date-time
+      example: "2017-07-21T17:32:28.000Z"
+    endDateTime:
+      type: string
+      format: date-time
+      example: "2017-07-21T17:32:28.000Z"
+    createdAt:
+      type: string
+      format: date-time
+      example: 2017-07-21T17:32:28.000Z
+    modifiedAt:
+      type: string
+      format: date-time
+      example: 2017-07-21T17:32:28.000Z
+    createdBy:
+      type: string
+      uniqueItems: true
+      example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    modifiedBy:
+      type: string
+      uniqueItems: true
+      example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+
+
+
+
+
+

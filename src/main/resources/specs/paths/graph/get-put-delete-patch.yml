@@ -1,0 +1,82 @@
+#___________________________________________________________________________
+#1. Update Sample
+put:
+  tags:
+    - graph-sample-endpoints
+  summary: Update a specific sample by id.
+  operationId: updateGraphSample
+  security: [ ]
+  parameters:
+    - $ref: "../../parameters/common.yml#/token"
+    - $ref: "../../parameters/common.yml#/id"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/sample.yml#/SampleResponse"
+  responses:
+    "200":
+      description: Found item structure.
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/sample.yml#/SampleResponse"
+
+# #___________________________________________________________________________
+#3.Delete Sample
+delete:
+  tags:
+    - graph-sample-endpoints
+  summary: Delete a specific sample by id.
+  operationId: deleteGraphSample
+  parameters:
+    - $ref: "../../parameters/common.yml#/token"
+    - $ref: "../../parameters/common.yml#/id"
+  responses:
+    "200":
+      $ref: "../../responses/common.yml#/200APIMessage"
+#___________________________________________________________________________
+#3.Update Sample
+patch:
+  tags:
+    - graph-sample-endpoints
+  summary: patch to sample by id.
+  operationId: patchGraphSample
+  security: [ ]
+  parameters:
+    - $ref: "../../parameters/common.yml#/token"
+    - $ref: "../../parameters/common.yml#/id"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../schemas/sample.yml#/SampleRequest"
+  responses:
+    "200":
+      description: Found item structure.
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/sample.yml#/SampleResponse"
+
+
+
+#___________________________________________________________________________
+#4.Find page of sample
+get:
+  tags:
+    - graph-sample-endpoints
+  summary: Fetch a specific sample.
+  operationId: searchGraphCurrentSample
+  parameters:
+    - $ref: "../../parameters/common.yml#/token"
+    - $ref: "../../parameters/common.yml#/id"
+  responses:
+    "200":
+      description: Found item by id.
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/sample.yml#/SampleResponse"

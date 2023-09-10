@@ -1,78 +1,54 @@
 package com.tiger.pocs.mapper;
 
-import com.tiger.pocs.paramResolver.*;
-import com.tiger.pocs.payload.ParticipantRequest;
-import com.tiger.pocs.payload.ParticipantResponse;
-import com.tiger.pocs.payload.WorkshopRequest;
-import com.tiger.pocs.payload.WorkshopResponse;
-import com.tiger.pocs.domain.entity.Participant;
-import com.tiger.pocs.domain.entity.Workshop;
-import com.tiger.pocs.paramResolver.*;
-import org.junit.jupiter.api.AfterEach;
+import com.tiger.pocs.domain.entity.rdbms.SampleEntity;
+import com.tiger.pocs.mapper.rdbms.CustomMapper;
+import com.tiger.pocs.mapper.rdbms.CustomMapperImpl;
+import com.tiger.pocs.paramResolver.SampleEntityParameterResolver;
+import com.tiger.pocs.paramResolver.SampleRequestParameterResolver;
+import com.tiger.pocs.paramResolver.SampleResponseParameterResolver;
+import com.tiger.pocs.payload.SampleRequest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.tiger.pocs.utils.Constants.CREATE_BY_USER;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 
 @ExtendWith({
-        WorkshopRequestParameterResolver.class,
-        WorkshopEntityParameterResolver.class,
-        WorkshopResponseParameterResolver.class,
-        ParticipantRequestParameterResolver.class,
-        ParticipantResponseParameterResolver.class,
-        ParticipantEntityParameterResolver.class
+        MockitoExtension.class,
+        SampleEntityParameterResolver.class,
+        SampleRequestParameterResolver.class,
+        SampleResponseParameterResolver.class
 })
+@Execution(ExecutionMode.CONCURRENT)
 class CustomMapperTest {
+    private final CustomMapper mapper = new CustomMapperImpl();
 
-    private CustomMapper mapperMock;
 
     @BeforeEach
-    public void setUp() {
-        mapperMock = new CustomMapper();
-    }
-
-    @AfterEach
-    void tearDown() {
+    void setUp() {
     }
 
     @Test
-    void mapWorkshopRequest_To_Entity_Succeeded(WorkshopRequest request, WorkshopResponse response) {
+    @DisplayName("Map Sample request to sample entity succeeded ✅")
+    void request_sample_request_to_sample_entity_succeeded(SampleRequest request, SampleEntity sampleEntity) {
 
-        var ignoreFields = new String[]{"uuid", "createdAt", "modifiedAt", "createdByUser", "modifiedByUser", "version"};
-        var underTest = mapperMock.toEntity(request);
-        assertThat(underTest)
-                .usingRecursiveComparison()
-                .ignoringFields(ignoreFields)
-                .isEqualTo(response);
-    }
+        var fields = new String[]{"uuid", "createdAt", "createdBy", "version"};
 
-    @Test
-    void mapWorkshopEntity_To_Response_Succeeded(Workshop workshop, WorkshopResponse response) {
-
-        var underTest = mapperMock.toResponse(workshop);
-        assertThat(underTest)
-                .usingRecursiveComparison()
-                .isEqualTo(response)
-                .isNotNull();
-    }
-
-    @Test
-    void mapParticipantRequest_To_Entity_Succeeded(ParticipantRequest request, ParticipantResponse response) {
-        var ignoreFields = new String[]{"uuid", "createdAt", "modifiedAt", "createdByUser", "modifiedByUser", "version"};
-        var underTest = mapperMock.toParticipantEntity(request);
-        assertThat(underTest)
-                .usingRecursiveComparison()
-                .ignoringFields(ignoreFields)
-                .isEqualTo(response);
-    }
-
-    @Test
-    void mapEntity_To_ParticipantResponse_Succeeded(Participant request, ParticipantResponse response) {
-        var underTest = mapperMock.toParticipantResponse(request);
-        assertThat(underTest)
-                .usingRecursiveComparison()
-                .isEqualTo(response)
-                .isNotNull();
+        var underTest = mapper.requestToSampleEntity(request);
+        assertAll(
+                "Grouped Assertions of User",
+                () -> assertThat(underTest)
+                        .usingRecursiveComparison()
+                        .ignoringFields(fields)
+                        .isEqualTo(sampleEntity),
+                () -> assertThat(underTest.getCreatedBy()).isEqualTo(CREATE_BY_USER)
+        );
     }
 }
