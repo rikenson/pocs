@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="report">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="description" type="xs:string"/>
+                <xs:element name="generatedAt" type="xs:string"/>
+                <xs:element name="sample">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="createdAt" type="xs:string"/>
+                            <xs:element name="description" type="xs:string"/>
+                            <xs:element name="endDateTime" type="xs:string"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="startDateTime" type="xs:string"/>
+                            <xs:element name="status" type="xs:string"/>
+                            <xs:element name="uuid" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
