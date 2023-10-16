@@ -90,7 +90,7 @@ public class SampleGraphServiceImpl implements SampleGraphService {
     @Override
     public List<Object> findStartedSample() {
         Map<String, Object> params = new HashMap<>();
-        params.put("status", "ENDED");
+        params.put("status", "STARTED");
         return repository.executeTraversal(getQuery.apply(traversal, "started.sample"), params);
     }
 

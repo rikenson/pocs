@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<remise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="">
+    <realEstates xsi:type="realEstateAsset">
+        <beneficiaries>
+            <beneficiary>
+                <firstname>Rikenson</firstname>
+                <lastname>JACQUES</lastname>
+                <address xsi:type="usAddress">
+                    <civicNo>491</civicNo>
+                    <apartNo>B</apartNo>
+                    <streetName>Leclerc</streetName>
+                    <state>BST</state>
+                </address>
+            </beneficiary>
+            <beneficiary>
+                <firstname>Rikenson</firstname>
+                <lastname>JACQUES</lastname>
+                <address xsi:type="caAddress">
+                    <civicNo>491</civicNo>
+                    <apartNo>B</apartNo>
+                    <streetName>Leclerc</streetName>
+                    <province>QC</province>
+                </address>
+            </beneficiary>
+        </beneficiaries>
+        <owners>
+            <owner>
+                <firstname>Rikenson</firstname>
+                <lastname>JACQUES</lastname>
+                <address xsi:type="caAddress">
+                    <civicNo>491</civicNo>
+                    <apartNo>B</apartNo>
+                    <streetName>Leclerc</streetName>
+                    <geoPosition>EST</geoPosition>
+                </address>
+            </owner>
+            <owner>
+                <firstname>Rikenson</firstname>
+                <lastname>JACQUES</lastname>
+                <address xsi:type="usAddress">
+                    <civicNo>491</civicNo>
+                    <apartNo>B</apartNo>
+                    <streetName>Leclerc</streetName>
+                    <zipCode>US-89</zipCode>
+                </address>
+            </owner>
+        </owners>
+    </realEstates>
+    <registered xsi:type="registeredAsset">
+        <owners>
+            <owner>
+                <firstname>Rikenson</firstname>
+                <lastname>JACQUES</lastname>
+                <address xsi:type="caAddress">
+                    <civicNo>491</civicNo>
+                    <apartNo>B</apartNo>
+                    <streetName>Leclerc</streetName>
+                    <province>ALBERTA</province>
+                </address>
+            </owner>
+            <owner>
+                <firstname>Rikenson</firstname>
+                <lastname>JACQUES</lastname>
+                <address xsi:type="usAddress">
+                    <civicNo>491</civicNo>
+                    <apartNo>B</apartNo>
+                    <streetName>Leclerc</streetName>
+                    <state>NY</state>
+                </address>
+            </owner>
+        </owners>
+    </registered>
+</remise>

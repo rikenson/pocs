@@ -20,6 +20,7 @@ spring:
     initialization-mode: always
     continue-on-error: true
   jpa:
+    open-in-view: false
     defer-datasource-initialization: true
     properties:
       hibernate:
@@ -51,3 +52,8 @@ thinkerpop:
   db:
     host: localhost
     port: 8182
+
+file:
+  pl17:
+    xsd-path: /xsd
+    xml-path: /generated

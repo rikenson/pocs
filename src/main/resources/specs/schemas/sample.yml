@@ -139,7 +139,27 @@ SampleResponse:
       example: d815d301-8bae-4dd0-a292-56e0cb7509d6
 
 
-
-
-
-
+SampleXML:
+  type: object
+  title: SampleXML
+  x-class-extra-annotation: '@lombok.Builder 
+      @jakarta.xml.bind.annotation.XmlRootElement(name = "report")
+      @jakarta.xml.bind.annotation.XmlAccessorType(jakarta.xml.bind.annotation.XmlAccessType.FIELD)'
+  required:
+    - description
+    - generatedAt
+    - responses
+  properties:
+    description:
+      type: string
+      x-field-extra-annotation: '@jakarta.xml.bind.annotation.XmlAttribute'
+    generatedAt:
+      type: string
+      format: date-time
+      x-field-extra-annotation: '@jakarta.xml.bind.annotation.XmlAttribute
+          @jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter(com.tiger.pocs.adapter.LocalDateTimeAdapter.class)'
+    responses:
+      type: array
+      x-field-extra-annotation: '@jakarta.xml.bind.annotation.XmlElement(name = "sample")'
+      items:
+        $ref: '#/SampleResponse'

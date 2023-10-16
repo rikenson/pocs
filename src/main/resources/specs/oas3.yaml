@@ -1,7 +1,4 @@
 openapi: 3.0.0
-servers:
-  - url: 'http://localhost:4000'
-    description: Server description
 info:
   title: sample-management-rest
   version: 1.0.0
@@ -10,7 +7,10 @@ info:
     email: infos-dev@mendoz.labs
   license:
     name: SBT 1.0
-    url: 'https://www.licence.mendoz.labs'
+    url: https://www.licence.mendoz.labs
+servers:
+  - url: http://localhost:4000
+    description: Server description
 tags:
   - name: sample-endpoints
     description: Samples management operations
@@ -32,44 +32,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: SampleRequest
-              required:
-                - name
-                - description
-                - startDateTime
-                - endDateTime
-                - status
-              properties:
-                name:
-                  type: string
-                  example: Unit Testing
-                description:
-                  type: string
-                  example: Sample sur la mise en place des test unitaires...
-                status:
-                  type: string
-                  default: PENDING
-                  enum:
-                    - ENDED
-                    - STARTED
-                    - CANCELED
-                    - PENDING
-                startDateTime:
-                  type: string
-                  format: date-time
-                  example: '2017-07-21T17:32:28.000Z'
-                endDateTime:
-                  type: string
-                  format: date-time
-                  example: '2017-07-21T17:32:28.000Z'
+              $ref: '#/components/schemas/SampleRequest'
       responses:
         '201':
           description: Item created successfully.
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleResponse'
     get:
       tags:
         - sample-endpoints
@@ -89,8 +59,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
-  '/samples/{id}':
+                  $ref: '#/components/schemas/SampleResponse'
+  /samples/{id}:
     put:
       tags:
         - sample-endpoints
@@ -104,68 +74,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: SampleRequest
-              required:
-                - uuid
-                - createdByUser
-                - modifiedByUser
-                - createdAt
-                - name
-                - description
-                - startDateTime
-                - endDateTime
-                - status
-              properties:
-                uuid:
-                  type: string
-                  uniqueItems: true
-                  example: d815d301-8bae-4dd0-a292-56e0cb7509d6
-                name:
-                  type: string
-                  example: Unit Testing
-                description:
-                  type: string
-                  example: Sample sur la mise en place des test unitaires...
-                status:
-                  type: string
-                  default: PENDING
-                  enum:
-                    - ENDED
-                    - STARTED
-                    - CANCELED
-                    - PENDING
-                startDateTime:
-                  type: string
-                  format: date-time
-                  example: '2017-07-21T17:32:28.000Z'
-                endDateTime:
-                  type: string
-                  format: date-time
-                  example: '2017-07-21T17:32:28.000Z'
-                createdAt:
-                  type: string
-                  format: date-time
-                  example: 2017-07-21T17:32:28.000Z
-                modifiedAt:
-                  type: string
-                  format: date-time
-                  example: 2017-07-21T17:32:28.000Z
-                createdBy:
-                  type: string
-                  uniqueItems: true
-                  example: d815d301-8bae-4dd0-a292-56e0cb7509d6
-                modifiedBy:
-                  type: string
-                  uniqueItems: true
-                  example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+              $ref: '#/components/schemas/SampleResponse'
       responses:
         '200':
           description: Found item structure.
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleResponse'
     delete:
       tags:
         - sample-endpoints
@@ -192,14 +108,14 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/paths/~1samples/post/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleRequest'
       responses:
         '200':
           description: Found item structure.
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleResponse'
     get:
       tags:
         - sample-endpoints
@@ -214,7 +130,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleResponse'
   /graph-samples:
     post:
       tags:
@@ -228,14 +144,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1samples/post/requestBody/content/application~1json/schema'
+              $ref: '#/components/schemas/SampleRequest'
       responses:
         '201':
           description: Item created successfully.
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleResponse'
     get:
       tags:
         - graph-sample-endpoints
@@ -255,8 +171,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
-  '/graph-samples/{id}':
+                  $ref: '#/components/schemas/SampleResponse'
+  /graph-samples/{id}:
     put:
       tags:
         - graph-sample-endpoints
@@ -270,14 +186,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
+              $ref: '#/components/schemas/SampleResponse'
       responses:
         '200':
           description: Found item structure.
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleResponse'
     delete:
       tags:
         - graph-sample-endpoints
@@ -304,14 +220,14 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/paths/~1samples/post/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleRequest'
       responses:
         '200':
           description: Found item structure.
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleResponse'
     get:
       tags:
         - graph-sample-endpoints
@@ -326,7 +242,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1samples~1%7Bid%7D/put/requestBody/content/application~1json/schema'
+                $ref: '#/components/schemas/SampleResponse'
   /aws-parameters:
     post:
       tags:
@@ -348,7 +264,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParamResponse'
-  '/aws-parameters/{key}':
+  /aws-parameters/{key}:
     get:
       tags:
         - aws-params-endpoints
@@ -388,38 +304,19 @@ components:
       type: oauth2
       flows:
         implicit:
-          authorizationUrl: 'http://localhost/oauth/auth'
+          authorizationUrl: http://localhost/oauth/auth
           scopes:
             write: allows modifying resources
             read: allows reading resources
   parameters:
-    startDateTime:
-      in: query
-      name: startDateTime
-      description: Fields to consider to filter by start datetime.
-      required: false
+    token:
+      in: header
+      name: token
+      description: security token
+      required: true
       schema:
         type: string
-        format: date-time
-        example: 2017-07-21T17:32:28.000Z
-    endDateTime:
-      in: query
-      name: endDateTime
-      description: Fields to consider to filter by ended datetime.
-      required: false
-      schema:
-        type: string
-        format: date-time
-        example: 2017-07-21T17:32:28.000Z
-    preferredField:
-      in: query
-      name: preferredField
-      description: Fields to consider to order the elements.
-      required: false
-      schema:
-        type: string
-        example: id
-        default: id
+        example: 283jebuiVIVEG&#G#UGFXVVWWVD#h3dndon3j0d1hd119hd&ywyw^YS
     status:
       in: query
       name: status
@@ -433,6 +330,33 @@ components:
           - STARTED
           - CANCELED
           - PENDING
+    preferredField:
+      in: query
+      name: preferredField
+      description: Fields to consider to order the elements.
+      required: false
+      schema:
+        type: string
+        example: id
+        default: id
+    startDateTime:
+      in: query
+      name: startDateTime
+      description: Fields to consider to filter by start datetime.
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28.000Z'
+    endDateTime:
+      in: query
+      name: endDateTime
+      description: Fields to consider to filter by ended datetime.
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28.000Z'
     id:
       in: path
       name: id
@@ -441,14 +365,6 @@ components:
       schema:
         type: string
         example: d815d301-8bae-4dd0-a292-56e0cb7509d6
-    token:
-      in: header
-      name: token
-      description: security token
-      required: true
-      schema:
-        type: string
-        example: 283jebuiVIVEG&#G#UGFXVVWWVD#h3dndon3j0d1hd119hd&ywyw^YS
     key:
       in: path
       name: key
@@ -466,136 +382,6 @@ components:
         type: string
         example: path
   schemas:
-    ParamRequest:
-      type: object
-      required:
-        - name
-        - value
-        - type
-      properties:
-        name:
-          type: string
-          example: /config/pocs/message
-        value:
-          type: string
-          example: Integration SSM Parameter Service Spring Boot
-        type:
-          type: string
-          example: String
-        version:
-          type: integer
-          example: 1
-    ParamResponse:
-      allOf:
-        - $ref: '#/components/schemas/ParamRequest'
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: ''
-        name:
-          type: string
-          example: /config/pocs/message
-        value:
-          type: string
-          example: Integration SSM Parameter Service Spring Boot
-        type:
-          type: string
-          example: String
-        version:
-          type: integer
-          example: 1
-        lastModifiedDate:
-          type: string
-          format: date-time
-          example: 2017-07-21T17:32:28.000Z
-    SampleRequest:
-      type: object
-      title: SampleRequest
-      required:
-        - name
-        - description
-        - startDateTime
-        - endDateTime
-        - status
-      properties:
-        name:
-          type: string
-          example: Unit Testing
-        description:
-          type: string
-          example: Sample sur la mise en place des test unitaires...
-        status:
-          type: string
-          default: PENDING
-          enum:
-            - ENDED
-            - STARTED
-            - CANCELED
-            - PENDING
-        startDateTime:
-          type: string
-          format: date-time
-          example: '2017-07-21T17:32:28.000Z'
-        endDateTime:
-          type: string
-          format: date-time
-          example: '2017-07-21T17:32:28.000Z'
-    LinkedRequest:
-      type: object
-      title: LinkedRequest
-      required:
-        - linkLabel
-        - sampleEdge
-        - sVertex
-        - eVertex
-      properties:
-        linkLabel:
-          type: string
-          example: are_brothers
-        sampleEdge:
-          $ref: '#/components/schemas/SampleEdge'
-        sVertex:
-          $ref: '#/components/schemas/SampleRequest'
-        eVertex:
-          $ref: '#/components/schemas/SampleRequest'
-    SampleEdge:
-      type: object
-      title: SampleEdge
-      required:
-        - similitudeDegree
-      properties:
-        similitudeDegree:
-          type: integer
-          format: int64
-          example: similitudeDegree
-    PatchSampleRequest:
-      type: object
-      title: SampleRequest
-      properties:
-        name:
-          type: string
-          example: Unit Testing
-        description:
-          type: string
-          example: Sample sur la mise en place des test unitaires...
-        status:
-          type: string
-          default: PENDING
-          enum:
-            - ENDED
-            - STARTED
-            - CANCELED
-            - PENDING
-        startDateTime:
-          type: string
-          format: date-time
-          example: '2017-07-21T17:32:28.000Z'
-        endDateTime:
-          type: string
-          format: date-time
-          example: '2017-07-21T17:32:28.000Z'
     SampleResponse:
       type: object
       title: SampleRequest
@@ -639,11 +425,11 @@ components:
         createdAt:
           type: string
           format: date-time
-          example: 2017-07-21T17:32:28.000Z
+          example: '2017-07-21T17:32:28.000Z'
         modifiedAt:
           type: string
           format: date-time
-          example: 2017-07-21T17:32:28.000Z
+          example: '2017-07-21T17:32:28.000Z'
         createdBy:
           type: string
           uniqueItems: true
@@ -652,6 +438,157 @@ components:
           type: string
           uniqueItems: true
           example: d815d301-8bae-4dd0-a292-56e0cb7509d6
+    SampleRequest:
+      type: object
+      title: SampleRequest
+      required:
+        - name
+        - description
+        - startDateTime
+        - endDateTime
+        - status
+      properties:
+        name:
+          type: string
+          example: Unit Testing
+        description:
+          type: string
+          example: Sample sur la mise en place des test unitaires...
+        status:
+          type: string
+          default: PENDING
+          enum:
+            - ENDED
+            - STARTED
+            - CANCELED
+            - PENDING
+        startDateTime:
+          type: string
+          format: date-time
+          example: '2017-07-21T17:32:28.000Z'
+        endDateTime:
+          type: string
+          format: date-time
+          example: '2017-07-21T17:32:28.000Z'
+    ParamRequest:
+      type: object
+      required:
+        - name
+        - value
+        - type
+      properties:
+        name:
+          type: string
+          example: /config/pocs/message
+        value:
+          type: string
+          example: Integration SSM Parameter Service Spring Boot
+        type:
+          type: string
+          example: String
+        version:
+          type: integer
+          example: 1
+    ParamResponse:
+      allOf:
+        - $ref: '#/components/schemas/ParamRequest'
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: ''
+        name:
+          type: string
+          example: /config/pocs/message
+        value:
+          type: string
+          example: Integration SSM Parameter Service Spring Boot
+        type:
+          type: string
+          example: String
+        version:
+          type: integer
+          example: 1
+        lastModifiedDate:
+          type: string
+          format: date-time
+          example: '2017-07-21T17:32:28.000Z'
+    SampleEdge:
+      type: object
+      title: SampleEdge
+      required:
+        - similitudeDegree
+      properties:
+        similitudeDegree:
+          type: integer
+          format: int64
+          example: similitudeDegree
+    LinkedRequest:
+      type: object
+      title: LinkedRequest
+      required:
+        - linkLabel
+        - sampleEdge
+        - sVertex
+        - eVertex
+      properties:
+        linkLabel:
+          type: string
+          example: are_brothers
+        sampleEdge:
+          $ref: '#/components/schemas/SampleEdge'
+        sVertex:
+          $ref: '#/components/schemas/SampleRequest'
+        eVertex:
+          $ref: '#/components/schemas/SampleRequest'
+    PatchSampleRequest:
+      type: object
+      title: SampleRequest
+      properties:
+        name:
+          type: string
+          example: Unit Testing
+        description:
+          type: string
+          example: Sample sur la mise en place des test unitaires...
+        status:
+          type: string
+          default: PENDING
+          enum:
+            - ENDED
+            - STARTED
+            - CANCELED
+            - PENDING
+        startDateTime:
+          type: string
+          format: date-time
+          example: '2017-07-21T17:32:28.000Z'
+        endDateTime:
+          type: string
+          format: date-time
+          example: '2017-07-21T17:32:28.000Z'
+    SampleXML:
+      type: object
+      title: SampleXML
+      x-class-extra-annotation: '@lombok.Builder  @jakarta.xml.bind.annotation.XmlRootElement(name = "report") @jakarta.xml.bind.annotation.XmlAccessorType(jakarta.xml.bind.annotation.XmlAccessType.FIELD)'
+      required:
+        - description
+        - generatedAt
+        - responses
+      properties:
+        description:
+          type: string
+          x-field-extra-annotation: '@jakarta.xml.bind.annotation.XmlAttribute'
+        generatedAt:
+          type: string
+          format: date-time
+          x-field-extra-annotation: '@jakarta.xml.bind.annotation.XmlAttribute @jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter(com.tiger.pocs.adapter.LocalDateTimeAdapter.class)'
+        responses:
+          type: array
+          x-field-extra-annotation: '@jakarta.xml.bind.annotation.XmlElement(name = "sample")'
+          items:
+            $ref: '#/components/schemas/SampleResponse'
   responses:
     200APIMessage:
       description: Operation done successfully.
