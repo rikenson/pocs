@@ -23,6 +23,8 @@ public interface SampleGraphService {
 
     Long remove(String key, String value);
 
+    List<Object> findStartedSample();
+
     Object linkExistingVertices(@NotNull final SampleEdge edge,
                                 @NotNull final String edgeLabel,
                                 @NotNull final String sVertexLabel,

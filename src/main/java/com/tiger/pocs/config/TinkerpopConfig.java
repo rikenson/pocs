@@ -17,20 +17,26 @@ import static org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalS
 
 @Configuration
 @ConfigurationProperties(prefix = "thinkerpop.db")
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TinkerpopConfig {
     private String host;
     private Integer port;
 
-    /**
-     * @return GraphTraversalSource
-     */
-    @Primary
-    @Bean("CustomGraphTraversalSource")
-    public GraphTraversalSource graphTraversalSource() {
+    @Bean("cluster")
+    public Cluster cluster() {
         Cluster.Builder builder = Cluster.build();
         builder.addContactPoint(host);
         builder.port(port);
-        return traversal().withRemote(DriverRemoteConnection.using(builder.create()));
+        return builder.create();
+
+    }
+
+    @Primary
+    @Bean("CustomGraphTraversalSource")
+    public GraphTraversalSource graphTraversalSource(Cluster cluster) {
+        return traversal().withRemote(DriverRemoteConnection.using(cluster));
     }
 }

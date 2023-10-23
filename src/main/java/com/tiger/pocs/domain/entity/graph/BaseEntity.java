@@ -13,7 +13,6 @@ import java.util.UUID;
 public abstract class BaseEntity implements Serializable {
 
     private String uuid;
-
 //    @SerializedName("created_at")
     private LocalDateTime createdAt;
 //    @SerializedName("modified_at")

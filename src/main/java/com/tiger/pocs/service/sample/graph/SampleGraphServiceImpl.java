@@ -10,27 +10,25 @@ import com.tiger.pocs.payload.SampleResponse;
 import com.tiger.pocs.repository.graph.GremlinProxy;
 import com.tiger.pocs.utils.Utils;
 import jakarta.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
+import java.util.function.BiFunction;
 
 @Service
+@RequiredArgsConstructor
 public class SampleGraphServiceImpl implements SampleGraphService {
     Logger logger = LoggerFactory.getLogger(SampleGraphServiceImpl.class);
 
     private final SampleMapper converter;
     private final GremlinProxy repository;
-
     private final Gson customGson;
+    private final List<LinkedHashMap<String, String>> traversal;
 
-    public SampleGraphServiceImpl(SampleMapper converter, GremlinProxy repository, Gson customGson) {
-        this.converter = converter;
-        this.repository = repository;
-        this.customGson = customGson;
-    }
 
     @Override
     public SampleResponse add(SampleRequest request) {
@@ -82,6 +80,20 @@ public class SampleGraphServiceImpl implements SampleGraphService {
     public Long remove(String key, String value) {
         return repository.delete(Utils.toLabel(SampleRequest.class.getSimpleName()), key, value);
     }
+    BiFunction<List<LinkedHashMap<String, String>>, String, String> getQuery = (traversals, key) -> {
+        var found = traversals.stream()
+                .filter(a -> a.containsKey(key))
+                .findFirst().orElse(null);
+        return Objects.isNull(found) ? "" : found.get(key);
+    };
+
+    @Override
+    public List<Object> findStartedSample() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("status", "STARTED");
+        return repository.executeTraversal(getQuery.apply(traversal, "started.sample"), params);
+    }
+
 
     @Override
     public Object linkExistingVertices(@NotNull final SampleEdge edge,

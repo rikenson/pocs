@@ -10,4 +10,11 @@ public class MessagePublisherImpl implements MessagePublisher {
         // TODO document why this method is empty
     }
 
+
+    public <T> T validateRow(T inputRow) {
+
+        return inputRow;
+    }
+
+
 }

@@ -3,6 +3,10 @@ package com.tiger.pocs.repository.graph;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import jakarta.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
+import org.apache.tinkerpop.gremlin.driver.Client;
+import org.apache.tinkerpop.gremlin.driver.Cluster;
+import org.apache.tinkerpop.gremlin.driver.Result;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
@@ -14,6 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,16 +29,13 @@ import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.*;
 
 @Component
 @Qualifier("GraphSampleRepository")
+@RequiredArgsConstructor
 public class GremlinProxy {
 
     Logger logger = LoggerFactory.getLogger(GremlinProxy.class);
+    private final Cluster cluster;
     private final GraphTraversalSource g;
     private final Gson customGson;
-
-    public GremlinProxy(GraphTraversalSource g, Gson customGson) {
-        this.g = g;
-        this.customGson = customGson;
-    }
 
 
     /**
@@ -201,14 +203,20 @@ public class GremlinProxy {
         return traversal.coalesce(elementMap()).next();
     }
 
-    public Object executeTraversal(@NotNull final String traversal) {
-        return traversal;
+    public List<Object> executeTraversal(@NotNull final String traversal, Map<String, Object> params) {
+        Client client = cluster.connect("sgSession");
+        List<Object> results = new ArrayList<>();
+        try {
+            results = client.submit(traversal, params)
+                    .stream().map(Result::getObject)
+                    .toList();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        } finally {
+            client.close();
+        }
+        return results;
     }
-
-    public Object executeTraversalByLabel(@NotNull final String traversal, @NotNull final String label) {
-        return traversal + label;
-    }
-
 
     private Map<String, Object> getObjectMap(Object object) {
         String json = customGson.toJson(object);
