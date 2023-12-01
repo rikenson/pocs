@@ -1,4 +1,4 @@
-package com.tiger.pocs.service.filegen.core;
+package com.tiger.pocs.service.generator.core;
 
 import com.tiger.pocs.domain.dto.*;
 import jakarta.xml.bind.JAXBContext;

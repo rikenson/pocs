@@ -2,16 +2,18 @@ package com.tiger.pocs.domain.dto;
 
 import jakarta.persistence.MappedSuperclass;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 @MappedSuperclass
+@XmlSeeAlso({USAddress.class, CAAddress.class})
 public abstract class Address implements IAddress {
     @XmlElement
-    String civicNo = "491";
+    String civicNo;
     @XmlElement
-    String apartNo = "B";
+    String apartNo;
     @XmlElement
-    String streetName = "Leclerc";
+    String streetName;
 
     static class Adapter extends XmlAdapter<Address, IAddress> {
         public IAddress unmarshal(Address v) {

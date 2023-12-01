@@ -1,6 +1,6 @@
-package com.tiger.pocs.handler;
+package com.tiger.pocs.controller;
 
-import com.tiger.pocs.handler.rdbms.SampleHandler;
+import com.tiger.pocs.controller.rdbms.SampleHandler;
 import com.tiger.pocs.paramResolver.SampleRequestParameterResolver;
 import com.tiger.pocs.paramResolver.SampleResponseParameterResolver;
 import com.tiger.pocs.paramResolver.UpdatedSampleRequestParameterResolver;

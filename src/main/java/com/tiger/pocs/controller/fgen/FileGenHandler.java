@@ -1,6 +1,6 @@
-package com.tiger.pocs.handler.fgen;
+package com.tiger.pocs.controller.fgen;
 
-import com.tiger.pocs.service.filegen.xml.XmlGenProcessor;
+import com.tiger.pocs.service.generator.xml.XmlGenProcessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

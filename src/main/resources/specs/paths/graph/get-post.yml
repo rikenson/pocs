@@ -6,8 +6,8 @@ post:
   summary: Register new sample.
   operationId: addGraphSample
   description: Add a brand new sample
-  parameters:
-    - $ref: "../../parameters/common.yml#/token"
+  params:
+    - $ref: "../../params/common.yml#/token"
   requestBody:
     content:
       application/json:
@@ -28,12 +28,12 @@ get:
     - graph-sample-endpoints
   summary: Fetch pages of samples filtered by criteria.
   operationId: searchGraphSamples
-  parameters:
-    - $ref: "../../parameters/common.yml#/token"
-    - $ref: "../../parameters/common.yml#/status"
-    - $ref: "../../parameters/common.yml#/preferredField"
-    - $ref: "../../parameters/common.yml#/startDateTime"
-    - $ref: "../../parameters/common.yml#/endDateTime"
+  params:
+    - $ref: "../../params/common.yml#/token"
+    - $ref: "../../params/common.yml#/status"
+    - $ref: "../../params/common.yml#/preferredField"
+    - $ref: "../../params/common.yml#/startDateTime"
+    - $ref: "../../params/common.yml#/endDateTime"
   responses:
     "200":
       description: Found item structure.

@@ -50,7 +50,7 @@ components:
             write: allows modifying resources
             read: allows reading resources
   parameters:
-    $ref: "./parameters/common.yml"
+    $ref: "./params/common.yml"
   schemas:
     $ref: "./schemas/params.yml"
   responses:

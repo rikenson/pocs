@@ -1,4 +1,4 @@
-package com.tiger.pocs.service.filegen.core;
+package com.tiger.pocs.service.generator.core;
 
 
 public interface FileGenerator {

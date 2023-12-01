@@ -3,3 +3,18 @@
     .project('SampleName','SampleDesc')
     .by(select('item').values('name'))
     .by(select('item').values('description')).toList()"
+
+- magic:
+    "
+        g.mergeV([(T.label):'Start', customId:'abc'])
+                .option(onCreate, [name: 'Starter', description: 'Starter V',created: new Date()], set).as('start')
+                .option(Merge.onMatch,[updated: new Date()])
+        .mergeV([(T.label):'End', customId:'abd'])
+                .option(onCreate, [name: 'Ender', description: 'Ender V',created: new Date()], set).as('end')
+                .option(Merge.onMatch,[updated: new Date()])
+        .mergeE(['customId':'StartEnd',(from):Merge.outV,(to):Merge.inV])
+                .option(Merge.outV, select('start'))
+                .option(Merge.inV, select('end'))
+                .option(Merge.onCreate,[created: new Date()])
+                .option(Merge.onMatch,[updated: new Date()])
+    "

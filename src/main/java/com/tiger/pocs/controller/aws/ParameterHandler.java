@@ -1,4 +1,4 @@
-package com.tiger.pocs.handler.aws;
+package com.tiger.pocs.controller.aws;
 
 import com.tiger.pocs.payload.ParamRequest;
 import com.tiger.pocs.payload.ParamResponse;

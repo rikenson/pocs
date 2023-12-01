@@ -1,4 +1,4 @@
-package com.tiger.pocs.service.filegen.xml;
+package com.tiger.pocs.service.generator.xml;
 
 public interface XmlGenProcessor {
     void processBasicReport();

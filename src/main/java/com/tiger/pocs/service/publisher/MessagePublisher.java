@@ -1,4 +1,4 @@
-package com.tiger.pocs.service.msgpublisher;
+package com.tiger.pocs.service.publisher;
 
 
 import com.tiger.pocs.payload.SampleResponse;

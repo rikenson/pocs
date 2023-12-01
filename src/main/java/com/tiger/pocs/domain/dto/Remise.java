@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Remise {
 
     @XmlElement
-    IAsset realEstates;
+    List<? extends IAsset> realEstates;
     @XmlElement
-    IAsset registered;
+    List<? extends IAsset> registered;
 }

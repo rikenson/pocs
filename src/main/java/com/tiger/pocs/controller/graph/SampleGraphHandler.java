@@ -1,4 +1,4 @@
-package com.tiger.pocs.handler.graph;
+package com.tiger.pocs.controller.graph;
 
 import com.tiger.pocs.payload.*;
 import com.tiger.pocs.service.sample.graph.SampleGraphService;
