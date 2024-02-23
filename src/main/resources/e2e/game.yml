@@ -1,0 +1,64 @@
+$ref: "./team.yml"
+
+BaseGame:
+  type: object
+  title: BaseGame
+  properties:
+    teams:
+      type: array
+      items:
+        $ref: "./team.yml/#/TeamRequest"
+    status:
+      type: string
+      default: PENDING
+      enum: [ENDED, STARTED, CANCELED, PENDING]
+    level:
+      type: integer
+      format: int32
+      example: 0
+    winner:
+      type: object
+      $ref: "./team.yml/#/TeamRequest"
+
+GameRequest:
+  allOf:
+    - $ref: "#/BaseGame"
+    - type: object
+      title: GameRequest
+      required:
+        - teams
+
+PatchedGameRequest:
+  allOf:
+    - $ref: "#/BaseGame"
+    - type: object
+      title: PatchedGameRequest
+
+UpdatedGameRequest:
+  allOf:
+    - $ref: "#/BaseGame"
+    - $ref: "#/AuditModel"
+    - type: object
+      title: UpdatedGameRequest
+      required:
+        - teams
+
+GameResponse:
+  allOf:
+    - $ref: "#/IDModel"
+    - $ref: "#/GameRequest"
+    - $ref: "#/BaseResponseModel"
+    - type: object
+      title: GameResponse
+
+DeleteGameResponse:
+  allOf:
+    - $ref: "#/IDModel"
+    - type: object
+      title: DeleteGameResponse
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          default: "Element removed successfully"

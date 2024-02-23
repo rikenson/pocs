@@ -1,0 +1,286 @@
+IDModel:
+  type: object
+  title: IDModel
+  required:
+    - currentId
+  properties:
+    currentId:
+      type: string
+      example: 1
+
+AuditModel:
+  allOf:
+    - $ref: "#/AuditModel"
+    - type: object
+      title: AuditModel
+      required:
+        - createdAt
+        - modifiedAt
+        - createdBy
+        - modifiedBy
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28.000Z
+        modifiedAt:
+          type: string
+          format: date-time
+          example: 2017-07-21T17:32:28.000Z
+        createdBy:
+          type: string
+          example: b815d301-8bae-4dd0-a292-56e0cb7509d5
+        modifiedBy:
+          type: string
+          example: b815d301-8bae-4dd0-a292-56e0cb7509d5
+
+Sort:
+  type: object
+  title: Sort
+  required:
+    - sorted
+    - unsorted
+    - empty
+  properties:
+    sorted:
+      type: boolean
+      example: false
+    unsorted:
+      type: boolean
+      example: true
+    empty:
+      type: boolean
+      example: true
+
+Pageable:
+  type: object
+  title: Pageable
+  required:
+    - sort
+    - pageNumber
+    - pageSize
+    - offset
+    - paged
+    - unpaged
+  properties:
+    sort:
+      $ref: "#/Sort"
+    pageNumber:
+      type: integer
+      format: int64
+      example: 0
+    pageSize:
+      type: integer
+      format: int64
+      example: 0
+    offset:
+      type: integer
+      format: int64
+      example: 0
+    paged:
+      type: boolean
+      example: true
+    unpaged:
+      type: boolean
+      example: true
+
+PageableExtra:
+  type: object
+  title: PageableExtra
+  required:
+    - totalElements
+    - totalPages
+    - last
+    - numberOfElements
+    - sort
+    - size
+    - number
+    - first
+    - empty
+  properties:
+    totalElements:
+      type: integer
+      format: int64
+      example: 0
+    totalPages:
+      type: integer
+      format: int64
+      example: 0
+    last:
+      type: boolean
+      example: false
+    numberOfElements:
+      type: integer
+      format: int64
+      example: 0
+    sort:
+      $ref: "#/Sort"
+    size:
+      type: integer
+      format: int64
+      example: 0
+    number:
+      type: integer
+      format: int64
+      example: 0
+    first:
+      type: boolean
+      example: true
+    empty:
+      type: boolean
+      example: false
+
+AbstractPage:
+  allOf:
+    - $ref: "#/PageableExtra"
+    - type: object
+      title: AbstractPage
+      required:
+        - pageable
+      properties:
+        pageable:
+          $ref: "#/Pageable"
+
+BaseResponseModel:
+  allOf:
+    - $ref: "#/IDModel"
+    - $ref: "#/AuditModel"
+    - type: object
+      title: BaseResponseModel
+
+PlayerFilter:
+  type: object
+  title: PlayerFilter
+  properties:
+    page:
+      type: integer
+      format: int32
+      default: 0
+    size:
+      type: integer
+      format: int32
+      default: 10
+    name:
+      type: string
+    level:
+      type: integer
+      format: int32
+      example: 0
+    preferredField:
+      type: string
+      default: "name"
+    gender:
+      type: string
+      default: UNKNOWN
+      enum: [MALE, FEMALE, UNKNOWN]
+
+TournamentFilter:
+  type: object
+  title: TournamentFilter
+  properties:
+    page:
+      type: integer
+      format: int32
+      default: 0
+    size:
+      type: integer
+      format: int32
+      default: 10
+    name:
+      type: string
+    status:
+      type: string
+      default: PENDING
+      enum: [ENDED, STARTED, CANCELED, PENDING]
+    preferredField:
+      type: string
+      default: "name"
+
+TeamFilter:
+  type: object
+  title: TeamFilter
+  properties:
+    page:
+      type: integer
+      format: int32
+      default: 0
+    size:
+      type: integer
+      format: int32
+      default: 10
+    name:
+      type: string
+    preferredField:
+      type: string
+      default: "name"
+    status:
+      type: string
+      default: QUALIFY
+      enum: [QUALIFY, DISQUALIFY, ABANDONED, PROHIBITED]
+
+AwardFilter:
+  type: object
+  title: AwardFilter
+  properties:
+    page:
+      type: integer
+      format: int32
+      default: 0
+    size:
+      type: integer
+      format: int32
+      default: 10
+    name:
+      type: string
+      default: "Award name"
+    actualValue:
+      type: number
+      format: double
+      default: 0.0
+    actualValueCurrency:
+      type: string
+      default: CA
+      enum: [CA, USD, EU, HT]
+    preferredField:
+      type: string
+      default: "preferred field name"
+
+GameFilter:
+  type: object
+  title: GameFilter
+  properties:
+    page:
+      type: integer
+      format: int32
+      default: 0
+    size:
+      type: integer
+      format: int32
+      default: 10
+    preferredField:
+      type: string
+      default: "name"
+    status:
+      type: string
+      default: PENDING
+      enum: [ENDED, STARTED, CANCELED, PENDING]
+    level:
+      type: integer
+      format: int32
+      default: 0
+
+VerdictFilter:
+  type: object
+  title: GameFilter
+  properties:
+    page:
+      type: integer
+      format: int32
+      default: 0
+    size:
+      type: integer
+      format: int32
+      default: 10
+    preferredField:
+      type: string
+      default: "name"
