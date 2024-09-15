@@ -1,29 +1,29 @@
-jnosql:
-  tinkerpop:
-    host: ws://localhost:8182
-    user: neo4j
-    password: admin123
-  graph:
-    provider: org.eclipse.jnosql.mapping.graph.connections.TinkerpopGraphConfiguration
-
+vault:
+  encrypt-key: pocs-encrypt-key
+  encrypt-path: transit/encrypt/${vault.encrypt-key}
 traversals:
   filename: traversals.yml
 spring:
   application:
     name: pocs
+  cloud:
+    vault:
+      host: localhost
+      port: 8200
+      scheme: http
+      authentication: TOKEN
+      token: root
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: usrdev
-    password: P@ssw0rd
-    platform: postgres
-    url: jdbc:postgresql://localhost:5432/pocs_db
-    initialization-mode: always
-    continue-on-error: true
+    username: dev
+    password: s3cr3t
+    url: jdbc:postgresql://localhost:5432/dev_database
   jpa:
     open-in-view: false
     defer-datasource-initialization: true
     properties:
       hibernate:
+        default_schema: dev_database
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: true
         ddl-auto: update
