@@ -1,5 +1,6 @@
 package com.tiger.pocs.mapper;
 
+import com.tiger.pocs.domain.TestSampleRequest;
 import com.tiger.pocs.domain.entity.rdbms.SampleEntity;
 import com.tiger.pocs.mapper.rdbms.CustomMapper;
 import com.tiger.pocs.mapper.rdbms.CustomMapperImpl;
@@ -37,7 +38,7 @@ class CustomMapperTest {
 
     @Test
     @DisplayName("Map Sample request to sample entity succeeded ✅")
-    void request_sample_request_to_sample_entity_succeeded(SampleRequest request, SampleEntity sampleEntity) {
+    void request_sample_request_to_sample_entity_succeeded(TestSampleRequest request, SampleEntity sampleEntity) {
 
         var fields = new String[]{"uuid", "createdAt", "createdBy", "version"};
 

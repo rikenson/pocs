@@ -1,0 +1,89 @@
+1. Analyse d'Impact
+
+a. Identifier les Modifications de la Base de Données
+Nature des modifications :
+Ajout de nouvelles entités : Entreprise et Employé.
+Modification de la table Client pour y inclure à la fois les individus et les entreprises.
+Éventuellement ajout de relations entre les tables Entreprise et Employé (ex : relation 1
+entre entreprise et employés).
+Impact direct sur les API :
+Les services et les endpoints qui géraient uniquement des individus devront désormais être capables de gérer à la fois les clients de type entreprise et leurs employés.
+Mise à jour des DTO pour inclure des informations relatives à l’entreprise et à ses employés.
+Impact sur les queues :
+Si les messages des queues géraient des informations client, les structures des messages devront être adaptées pour inclure les nouvelles entités liées aux entreprises et employés.
+
+b. Impacts Techniques
+Modifications des contrats API :
+Vérification de la compatibilité entre la gestion des clients individus et les entreprises.
+Les clients des API actuels doivent-ils être modifiés pour consommer ces nouveaux types de données (entreprise et employés) ?
+Un versionnement de l’API est à considérer pour éviter la rupture pour les clients qui ne sont pas encore prêts à gérer les entreprises.
+Services utilisant les listeners de queue :
+Les listeners doivent être mis à jour pour traiter les nouveaux types de messages, notamment pour les employés d'une entreprise.
+Les transformations ou opérations sur les données devront être adaptées à cette nouvelle structure.
+
+c. Impact sur les Performances
+Les requêtes complexes, par exemple pour récupérer une entreprise et ses employés, ou pour filtrer par type de client (individu ou entreprise), peuvent augmenter le coût en termes de performances.
+Test de performance des nouvelles requêtes après intégration des entreprises et de leurs employés.
+d. Impact sur les Systèmes Externes
+Si des systèmes externes consomment les données des clients via cette API, vérifier si ces systèmes peuvent accepter les nouvelles entités Entreprise et Employé dans leurs processus.
+2. Plan de Mise à Jour
+
+
+a. Préparation
+Communication avec les parties prenantes :
+Informer les utilisateurs de l’API de l’ajout de nouveaux types de clients (entreprises et employés) et des impacts potentiels sur leur utilisation de l'API.
+Planification des versions :
+Mettre en place un système de versionnement (ex: v1 pour les individus uniquement, v2 pour inclure entreprises et employés) pour permettre une transition progressive.
+Mise en place d’un environnement de test :
+Configurer un environnement de staging où les clients peuvent tester la compatibilité avec les nouvelles structures de données.
+b. Mise à Jour des API
+Mise à jour des DTO et des Entités :
+
+Créer de nouvelles entités Entreprise et Employé pour gérer les données des entreprises et leurs employés.
+Adapter l’entité Client pour prendre en charge à la fois les individus et les entreprises.
+Adapter les DTO pour inclure les informations de l'entreprise et des employés dans les réponses des endpoints.
+Modification des Requêtes et des Transactions :
+
+Adapter les requêtes dans les services pour pouvoir gérer les entreprises et leurs employés (ex: pour rechercher les employés d'une entreprise ou ajouter une entreprise avec ses employés).
+Si des transactions sont utilisées pour insérer ou mettre à jour des clients, vérifier que ces transactions fonctionnent également avec les entreprises et leurs employés.
+Versioning :
+
+Si les contrats API changent (nouveaux champs, nouvelles structures de réponse), une nouvelle version de l’API (ex: /v2/clients) doit être introduite.
+c. Mise à Jour des Listeners de Queue
+Adaptation des Messages :
+Les messages liés aux clients doivent être mis à jour pour inclure les nouveaux types Entreprise et Employé.
+Adapter les queues pour gérer l’ajout ou la mise à jour d'une entreprise et de ses employés.
+Mise à jour des Transformations :
+Si les listeners transforment ou valident les messages avant de persister les données en base, ces transformations doivent être adaptées pour les nouvelles structures.
+Compatibilité ascendante :
+Si les anciens messages peuvent encore être reçus dans la queue, assurer la compatibilité ascendante pour éviter les erreurs.
+d. Tests
+Test Unitaire et d'Intégration :
+Créer de nouveaux tests unitaires pour couvrir les cas d’utilisation des entreprises et employés.
+Mettre à jour les tests d’intégration pour valider que l'API et les queues fonctionnent correctement avec ces nouvelles entités.
+Test de Performance :
+Effectuer des tests de performance sur les nouvelles requêtes et endpoints qui incluent entreprises et employés, notamment les requêtes avec jointures entre entreprises et employés.
+e. Déploiement
+Mise en production :
+
+Déployer d’abord les changements dans un environnement de staging pour permettre des tests d’acceptation.
+Une fois validé, déployer en production en minimisant les interruptions de service.
+Monitoring :
+
+Mettre en place un suivi post-déploiement pour surveiller la performance et détecter d’éventuelles erreurs suite à la mise en production.
+Rollback :
+
+Avoir une stratégie de rollback au cas où les modifications provoqueraient des erreurs critiques en production.
+f. Suivi Post-déploiement
+Vérification de l’intégrité des données :
+S'assurer que les données des clients, entreprises et employés sont bien enregistrées et manipulées correctement après le déploiement.
+Retour des parties prenantes :
+Obtenir des retours des utilisateurs de l’API et des systèmes externes pour identifier tout problème ou ajustement nécessaire après la mise à jour.
+Conclusion
+L'ajout des entreprises et de leurs employés dans une API initialement conçue pour gérer des individus nécessite une modification importante de la base de données, des services, des DTO et des listeners de queue. En suivant ce modèle d’analyse d’impact et ce plan de mise à jour, on peut s’assurer que la transition se fera en douceur, tout en évitant la rupture des services existants et en garantissant l’intégrité des données et des performances de l'API.
+
+
+
+
+
+

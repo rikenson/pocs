@@ -1,6 +1,7 @@
 package com.tiger.pocs.service.sample.rdbms;
 
 
+import com.tiger.pocs.domain.TestSampleRequest;
 import com.tiger.pocs.payload.SampleRequest;
 import com.tiger.pocs.payload.SampleResponse;
 import com.tiger.pocs.payload.SampleRequest;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 public interface SampleService {
 
-    SampleResponse add(SampleRequest request);
+    SampleResponse add(TestSampleRequest request);
 
     SampleResponse edit(SampleResponse request, String uuid);
     SampleResponse partialEdit(SampleRequest request, String uuid);
