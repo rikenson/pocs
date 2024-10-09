@@ -13,12 +13,9 @@ spring:
     name: pocs
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: usrdev
-    password: P@ssw0rd
-    platform: postgres
-    url: jdbc:postgresql://localhost:5432/pocs_db
-    initialization-mode: always
-    continue-on-error: true
+    username: dev
+    password: s3cr3t
+    url: jdbc:postgresql://localhost:5432/dev_database
   jpa:
     open-in-view: false
     defer-datasource-initialization: true
@@ -52,6 +49,18 @@ thinkerpop:
   db:
     host: localhost
     port: 8182
+
+logging:
+  file:
+    name: logs/app.log
+  level:
+    com:
+      tiger:
+        services: INFO
+        handler: INFO
+    org:
+      springframework:
+        web: DEBUG
 
 file:
   pl17:

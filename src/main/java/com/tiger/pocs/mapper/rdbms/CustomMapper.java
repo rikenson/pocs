@@ -1,5 +1,6 @@
 package com.tiger.pocs.mapper.rdbms;
 
+import com.tiger.pocs.domain.TestSampleRequest;
 import com.tiger.pocs.domain.entity.rdbms.SampleEntity;
 import com.tiger.pocs.payload.ParamResponse;
 import com.tiger.pocs.payload.SampleRequest;
@@ -15,7 +16,7 @@ import software.amazon.awssdk.services.ssm.model.Parameter;
 public interface CustomMapper {
 
     //    @Mapping(target = "uuid", defaultExpression = "java(UUID.randomUUID
-    SampleEntity requestToSampleEntity(SampleRequest request);
+    SampleEntity requestToSampleEntity(TestSampleRequest request);
 
     SampleResponse entityToSampleResponse(SampleEntity entity);
 

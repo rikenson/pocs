@@ -1,5 +1,6 @@
 package com.tiger.pocs.handler.rdbms;
 
+import com.tiger.pocs.domain.TestSampleRequest;
 import com.tiger.pocs.domain.enums.Status;
 import com.tiger.pocs.domain.filter.SampleFilter;
 import com.tiger.pocs.payload.SampleRequest;
@@ -26,7 +27,7 @@ public class SampleHandler {
     }
 
     @PostMapping
-    public ResponseEntity<SampleResponse> samplePost(@RequestBody @Validated SampleRequest request) {
+    public ResponseEntity<SampleResponse> samplePost(@RequestBody @Validated TestSampleRequest request) {
         return new ResponseEntity<>(service.add(request), HttpStatus.CREATED);
     }
 
