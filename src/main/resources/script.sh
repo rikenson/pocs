@@ -17,15 +17,12 @@ if [ -z "$secrets" ] || [ "$secrets" == "null" ]; then
 fi
 
 # Parse the secrets and set them as environment variables
-echo "$secrets" | jq -r '.data.data | to_entries[] | @base64' | while IFS= read -r entry; do
-  # Decode the base64 entry to preserve newline characters
-  entry=$(echo "$entry" | base64 --decode)
-
+echo "$secrets" | jq -c '.data.data | to_entries[]' | while IFS= read -r entry; do
   # Extract key and value from the entry
   key=$(echo "$entry" | jq -r '.key')
   value=$(echo "$entry" | jq -r '.value')
 
-  # Set the environment variable with the full multiline value
+  # Set the environment variable with the full multiline value, ensuring proper quoting
   export "$key=$value"
   echo "Set environment variable: $key"
 done
