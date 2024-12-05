@@ -17,11 +17,13 @@ if [ -z "$secrets" ] || [ "$secrets" == "null" ]; then
 fi
 
 # Parse the secrets and set them as environment variables
-echo "$secrets" | jq -r '.data.data | to_entries[] | "\(.key)=\(.value | @sh)"' | while IFS= read -r line; do
-  # Use eval to safely handle multiline and special characters in values
-  eval "export $line"
-  
-  # Extract key for display purposes
+echo "$secrets" | jq -r '.data.data | to_entries[] | "\(.key)=\(.value)"' | while IFS= read -r line; do
   key=$(echo "$line" | cut -d '=' -f 1)
+  value=$(echo "$line" | cut -d '=' -f 2-)
+  
+  # Replace newlines with a space or another character if needed
+  value=$(echo "$value" | tr '\n' ' ')
+  
+  export "$key=$value"
   echo "Set environment variable: $key"
 done
