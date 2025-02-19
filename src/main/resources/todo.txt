@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -13,8 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,57 +24,62 @@ class SqsConsumerServiceTest {
     @InjectMocks
     private SqsConsumerService sqsConsumerService;
 
-    private final String queueUrl = "https://sqs.us-east-1.amazonaws.com/123456789012/test-queue";
-    
     @BeforeEach
     void setUp() {
-        // Simuler l'URL de la file
+        // Simulate empty SQS response initially
         Mockito.when(sqsClient.receiveMessage(any(ReceiveMessageRequest.class)))
                 .thenReturn(ReceiveMessageResponse.builder().messages(Collections.emptyList()).build());
     }
 
     @Test
-    void shouldProcessMessageSuccessfully() {
-        // 📌 Simuler un message dans la file
+    void shouldProcessMessageSuccessfully() throws InterruptedException {
+        // ✅ Simulate a valid message
         Message mockMessage = Message.builder()
                 .body("Hello SQS!")
                 .receiptHandle("receipt-handle-123")
                 .build();
 
-        // Simuler la réponse de SQS
         Mockito.when(sqsClient.receiveMessage(any(ReceiveMessageRequest.class)))
                 .thenReturn(ReceiveMessageResponse.builder().messages(List.of(mockMessage)).build());
 
-        // Exécuter la méthode qui lit la file (une seule fois pour le test)
-        sqsConsumerService.pollQueue();
+        // ✅ Run polling in a separate thread
+        Thread pollingThread = new Thread(() -> sqsConsumerService.pollQueue());
+        pollingThread.start();
 
-        // Vérifier que le message a été traité
+        // Wait a bit to let the message be processed
+        TimeUnit.SECONDS.sleep(3);
+
+        // ✅ Stop the polling
+        sqsConsumerService.stopListening();
+        pollingThread.join();
+
+        // ✅ Verify that the message was processed and deleted
         verify(sqsClient, times(1)).deleteMessage(any(DeleteMessageRequest.class));
     }
 
     @Test
     void shouldRetryOnFailureAndNotDeleteMessage() throws InterruptedException {
-        // 📌 Simuler un message qui va échouer
+        // ❌ Simulate a failing message
         Message mockMessage = Message.builder()
-                .body("fail") // Ce message va provoquer une exception dans processMessage()
+                .body("fail")  // This will cause processMessage() to throw an error
                 .receiptHandle("receipt-handle-456")
                 .build();
 
-        // Simuler la réponse de SQS
         Mockito.when(sqsClient.receiveMessage(any(ReceiveMessageRequest.class)))
                 .thenReturn(ReceiveMessageResponse.builder().messages(List.of(mockMessage)).build());
 
-        // Lancer la méthode de polling dans un thread pour ne pas bloquer les tests
+        // ✅ Run polling in a separate thread
         Thread pollingThread = new Thread(() -> sqsConsumerService.pollQueue());
         pollingThread.start();
 
-        // Attendre 6 secondes pour laisser le retry se produire
+        // Wait to allow the retry logic to trigger
         TimeUnit.SECONDS.sleep(6);
 
-        // Vérifier que deleteMessage() **n'a pas** été appelé (car le traitement a échoué)
-        verify(sqsClient, never()).deleteMessage(any(DeleteMessageRequest.class));
+        // ✅ Stop the polling
+        sqsConsumerService.stopListening();
+        pollingThread.join();
 
-        // Stopper la boucle infinie en interrompant le thread
-        pollingThread.interrupt();
+        // ❌ Verify that deleteMessage() was **never** called (since the message failed)
+        verify(sqsClient, never()).deleteMessage(any(DeleteMessageRequest.class));
     }
 }
